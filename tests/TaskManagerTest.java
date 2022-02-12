@@ -127,6 +127,7 @@ public class TaskManagerTest {
     public void deleteEpicById() {
         taskManager.deleteEpicById(2);
         assertEquals(0, taskManager.getAllEpics().size());
+        assertEquals(0, taskManager.getAllSubTasks().size());
     }
 
     @Test

@@ -8,7 +8,6 @@ import java.util.List;
 public class TaskManagerService {
     private final TaskRepository repository;
 
-
     public TaskManagerService(TaskRepository taskRepository) {
         this.repository = taskRepository;
     }
@@ -81,6 +80,7 @@ public class TaskManagerService {
 
     public void updateSubTask(SubTask subTask) {
         repository.updateSubTask(subTask);
+        subTask.getParent().updateStatus();
     }
 
     public void deleteTaskById(int id) {
@@ -88,12 +88,23 @@ public class TaskManagerService {
     }
 
     public void deleteSubTaskById(int id) {
-        Epic epic = repository.getSubTaskById(id).getParent();
-        repository.deleteSubTaskById(id);
+        SubTask subTask = repository.getSubTaskById(id);
+
+        Epic epic = subTask.getParent();
+        epic.getSubTasks().remove(subTask);
         epic.updateStatus();
+
+        repository.deleteSubTaskById(id);
     }
 
     public void deleteEpicById(int id) {
+        Epic epic = repository.getEpicById(id);
+
+        List<SubTask> subTasks = epic.getSubTasks();
+        for (SubTask subTask : subTasks) {
+            repository.deleteSubTaskById(subTask.getId());
+        }
+
         repository.deleteEpicById(id);
     }
 
