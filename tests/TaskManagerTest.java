@@ -1,7 +1,8 @@
 import org.junit.*;
 import static org.junit.Assert.*;
 import repositories.MemoryTaskRepository;
-import taskmanager.TaskManager;
+import services.TaskManager;
+import services.TaskManagerService;
 import tasks.*;
 
 import java.util.List;
@@ -19,7 +20,7 @@ public class TaskManagerTest {
 
     @Before
     public void setUp() {
-        taskManager = new TaskManager(new MemoryTaskRepository());
+        taskManager = new TaskManagerService(new MemoryTaskRepository());
 
         Task task = new Task("task", "desc");
         taskManager.createTask(task);
@@ -133,7 +134,7 @@ public class TaskManagerTest {
     @Test
     public void getAllSubTaskOfEpic() {
         Epic epic = taskManager.getEpicById(2);
-        List<SubTask> allSubTaskOfEpic = taskManager.getAllSubTaskOfEpic(epic);
+        List<SubTask> allSubTaskOfEpic = taskManager.getAllSubTasksOfEpic(epic);
         assertEquals(1, allSubTaskOfEpic.size());
     }
 

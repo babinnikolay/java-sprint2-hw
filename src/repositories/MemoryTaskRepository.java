@@ -6,15 +6,15 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class MemoryTaskRepository implements TaskRepository{
-    private final NavigableMap<Integer, Task> tasks;
-    private final NavigableMap<Integer, SubTask> subTasks;
-    private final NavigableMap<Integer, Epic> epics;
+    private final Map<Integer, Task> tasks;
+    private final Map<Integer, SubTask> subTasks;
+    private final Map<Integer, Epic> epics;
     private int lastId = 1;
 
     public MemoryTaskRepository() {
-        tasks = new TreeMap<>();
-        subTasks = new TreeMap<>();
-        epics = new TreeMap<>();
+        tasks = new HashMap<>();
+        subTasks = new HashMap<>();
+        epics = new HashMap<>();
     }
 
     @Override

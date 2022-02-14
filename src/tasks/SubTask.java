@@ -1,7 +1,7 @@
 package tasks;
 
 public class SubTask extends AbstractTask{
-    Epic parent;
+    private final Epic parent;
 
     public SubTask(String name, String description, Epic parent) {
         super(name, description, TaskStatus.NEW);
