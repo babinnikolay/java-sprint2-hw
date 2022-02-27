@@ -1,15 +1,23 @@
 package services;
 
 import repositories.TaskRepository;
-import tasks.*;
-
+import tasks.Task;
+import tasks.Epic;
+import tasks.SubTask;
+import tasks.TaskType;
 import java.util.List;
 
 public class TaskManagerService implements TaskManager {
     private final TaskRepository repository;
+    private final HistoryManager history;
 
     public TaskManagerService(TaskRepository taskRepository) {
         this.repository = taskRepository;
+        this.history = Managers.getDefaultHistory();
+    }
+
+    public HistoryManager getHistoryManager() {
+        return history;
     }
 
     @Override
@@ -49,17 +57,23 @@ public class TaskManagerService implements TaskManager {
 
     @Override
     public Task getTaskById(int id) {
-        return repository.getTaskById(id);
+        Task task = repository.getTaskById(id);
+        history.add(task);
+        return task;
     }
 
     @Override
     public Epic getEpicById(int id) {
-        return repository.getEpicById(id);
+        Epic epic = repository.getEpicById(id);
+        history.add(epic);
+        return epic;
     }
 
     @Override
     public SubTask getSubTaskById(int id) {
-        return repository.getSubTaskById(id);
+        SubTask subTask = repository.getSubTaskById(id);
+        history.add(subTask);
+        return subTask;
     }
 
     @Override

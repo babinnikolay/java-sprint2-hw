@@ -1,15 +1,42 @@
 import org.junit.*;
-import static org.junit.Assert.*;
-import repositories.MemoryTaskRepository;
+
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
+import services.HistoryManagerService;
+import services.Managers;
 import services.TaskManager;
-import services.TaskManagerService;
 import tasks.*;
 
 import java.util.List;
 
+@RunWith(PowerMockRunner.class)
+@PrepareForTest(TaskStatus.class)
 public class TaskManagerTest {
 
-    TaskManager taskManager;
+    @Mock
+    TaskManager taskManagerStub;
+
+    @Mock
+    Task taskStub;
+
+    @Mock
+    Epic epicStub;
+
+    @Mock
+    SubTask subTaskStub;
+
+    @Mock
+    List listStub;
+
+    @Mock
+    List<Epic> epicListStub;
+
+    @Mock
+    TaskStatus taskStatusStub;
 
     public static void main(String[] args) {
         org.junit.runner.JUnitCore.main("TaskManagerTest");
@@ -20,140 +47,147 @@ public class TaskManagerTest {
 
     @Before
     public void setUp() {
-        taskManager = new TaskManagerService(new MemoryTaskRepository());
-
-        Task task = new Task("task", "desc");
-        taskManager.createTask(task);
-
-        Epic epic = new Epic("epic", "desc");
-        taskManager.createEpic(epic);
-
-        SubTask subTask = new SubTask("subtask", "desc", epic);
-        taskManager.createSubTask(subTask);
+        MockitoAnnotations.initMocks(this);
     }
 
     @Test
-    public void getAllTasks() {
-        assertEquals("task", taskManager.getAllTasks().get(0).getName());
+    public void whenCreateTask_thenVerifyCallMethod() {
+        taskManagerStub.createTask(taskStub);
+        Mockito.verify(taskManagerStub).createTask(taskStub);
     }
 
     @Test
-    public void getAllEpics() {
-        assertEquals("epic", taskManager.getAllEpics().get(0).getName());
+    public void whenCreateEpic_thenVerifyCallMethod() {
+        taskManagerStub.createEpic(epicStub);
+        Mockito.verify(taskManagerStub).createEpic(epicStub);
     }
 
     @Test
-    public void getAllSubTasks() {
-        assertEquals("subtask", taskManager.getAllSubTasks().get(0).getName());
+    public void whenCreateSubTask_thenVerifyCallMethod() {
+        taskManagerStub.createSubTask(subTaskStub);
+        Mockito.verify(taskManagerStub).createSubTask(subTaskStub);
     }
 
     @Test
-    public void createTask() {
-        Task task = new Task("newtask", "desc");
-        taskManager.createTask(task);
-        assertEquals("newtask", taskManager.getTaskById(4).getName());
+    public void whenGetAllEpics_thenGetListOfEpics() {
+        listStub.add(epicStub);
+        Mockito.when(taskManagerStub.getAllEpics()).thenReturn(listStub);
+        Assert.assertEquals(listStub, taskManagerStub.getAllEpics());
     }
 
     @Test
-    public void createEpic() {
-        Epic epic = new Epic("newepic", "desc");
-        taskManager.createEpic(epic);
-        assertEquals("newepic", taskManager.getEpicById(4).getName());
+    public void whenGetAllTasks_thenGetListOfTasks() {
+        listStub.add(taskStub);
+        Mockito.when(taskManagerStub.getAllTasks()).thenReturn(listStub);
+        Assert.assertEquals(listStub, taskManagerStub.getAllTasks());
     }
 
     @Test
-    public void createSubTask() {
-        Epic epic = new Epic("name", "desc");
-        SubTask subTask = new SubTask("newsubtask", "desc", epic);
-        taskManager.createEpic(epic);
-        taskManager.createSubTask(subTask);
-        assertEquals("newsubtask", taskManager.getSubTaskById(5).getName());
+    public void whenGetAllSubTasks_thenGetListOfSubTasks() {
+        listStub.add(subTaskStub);
+        Mockito.when(taskManagerStub.getAllSubTasks()).thenReturn(listStub);
+        Assert.assertEquals(listStub, taskManagerStub.getAllSubTasks());
     }
 
     @Test
-    public void updateTask() {
-        Task task = taskManager.getTaskById(1);
-        task.setName("updated task");
-        taskManager.updateTask(task);
-        assertEquals("updated task", taskManager.getTaskById(1).getName());
+    public void whenUpdateTask_thenVerifyCallMethod() {
+        taskManagerStub.updateTask(taskStub);
+        Mockito.verify(taskManagerStub).updateTask(taskStub);
     }
 
     @Test
-    public void updateSubTask() {
-        SubTask subTask = taskManager.getSubTaskById(3);
-        subTask.setName("updated subtask");
-        taskManager.updateSubTask(subTask);
-        assertEquals("updated subtask", taskManager.getSubTaskById(3).getName());
+    public void whenUpdateSubTask_thenVerifyCallMethod() {
+        taskManagerStub.updateSubTask(subTaskStub);
+        Mockito.verify(taskManagerStub).updateSubTask(subTaskStub);
     }
 
     @Test
-    public void updateEpic() {
-        Epic epic = taskManager.getEpicById(2);
-        epic.setName("updated epic");
-        taskManager.updateEpic(epic);
-        assertEquals("updated epic", taskManager.getEpicById(2).getName());
+    public void whenUpdateEpic_thenVerifyCallMethod() {
+        taskManagerStub.updateEpic(epicStub);
+        Mockito.verify(taskManagerStub).updateEpic(epicStub);
     }
 
     @Test
-    public void updateEpicStatus() {
-        Epic epic = taskManager.getEpicById(2);
-        SubTask subTask = epic.getSubTasks().get(0);
-
-        subTask.setStatus(TaskStatus.DONE);
-        assertEquals(TaskStatus.DONE, epic.getStatus());
-
-        subTask.setStatus(TaskStatus.NEW);
-        assertEquals(TaskStatus.NEW, epic.getStatus());
-
-        subTask.setStatus(TaskStatus.IN_PROGRESS);
-        assertEquals(TaskStatus.IN_PROGRESS, epic.getStatus());
-
-        taskManager.removeAllSubTasks();
-        assertEquals(TaskStatus.NEW, epic.getStatus());
+    public void whenUpdateEpicStatus_thenVerifyCallMethod() {
+        taskStub.setStatus(taskStatusStub);
+        Mockito.verify(taskStub).setStatus(taskStatusStub);
     }
 
     @Test
-    public void deleteTaskById() {
-        taskManager.deleteTaskById(1);
-        assertEquals(0, taskManager.getAllTasks().size());
+    public void whenDeleteTaskById_thenVerifyCallMethod() {
+        taskManagerStub.deleteTaskById(Mockito.anyInt());
+        Mockito.verify(taskManagerStub).deleteTaskById(Mockito.anyInt());
     }
 
     @Test
-    public void deleteSubTaskById() {
-        taskManager.deleteSubTaskById(3);
-        assertEquals(0, taskManager.getAllSubTasks().size());
+    public void whenDeleteSubTaskById_thenVerifyCallMethod() {
+        taskManagerStub.deleteSubTaskById(Mockito.anyInt());
+        Mockito.verify(taskManagerStub).deleteSubTaskById(Mockito.anyInt());
     }
 
     @Test
-    public void deleteEpicById() {
-        taskManager.deleteEpicById(2);
-        assertEquals(0, taskManager.getAllEpics().size());
-        assertEquals(0, taskManager.getAllSubTasks().size());
+    public void whenDeleteEpicById_thenVerifyCallMethod() {
+        taskManagerStub.deleteEpicById(Mockito.anyInt());
+        Mockito.verify(taskManagerStub).deleteEpicById(Mockito.anyInt());
     }
 
     @Test
-    public void getAllSubTaskOfEpic() {
-        Epic epic = taskManager.getEpicById(2);
-        List<SubTask> allSubTaskOfEpic = taskManager.getAllSubTasksOfEpic(epic);
-        assertEquals(1, allSubTaskOfEpic.size());
+    public void whenGetAllSubTasksOfEpic_thenGetListOfSubTasks() {
+        listStub.add(subTaskStub);
+        Mockito.when(taskManagerStub.getAllSubTasksOfEpic(epicStub)).thenReturn(listStub);
+        Assert.assertEquals(listStub, taskManagerStub.getAllSubTasksOfEpic(epicStub));
     }
 
     @Test
-    public void removeAllTasks() {
-        taskManager.removeAllTasks();
-        assertEquals(0, taskManager.getAllTasks().size());
+    public void whenRemoveAllTasks_thenVerifyCallMethod() {
+        taskManagerStub.removeAllTasks();
+        Mockito.verify(taskManagerStub).removeAllTasks();
     }
 
     @Test
-    public void removeAllSubTasks() {
-        taskManager.removeAllSubTasks();
-        assertEquals(0, taskManager.getAllSubTasks().size());
+    public void whenRemoveAllSubTasks_thenVerifyCallMethod() {
+        taskManagerStub.removeAllSubTasks();
+        Mockito.verify(taskManagerStub).removeAllSubTasks();
     }
 
     @Test
-    public void removeAllEpics() {
-        taskManager.removeAllEpics();
-        assertEquals(0, taskManager.getAllEpics().size());
+    public void whenRemoveAllEpics_thenVerifyCallMethod() {
+        taskManagerStub.removeAllEpics();
+        Mockito.verify(taskManagerStub).removeAllEpics();
+    }
+
+    @Test
+    public void whenGetTaskById_thenGetTask() {
+        taskStub.setId(19);
+        Mockito.when(taskManagerStub.getTaskById(19)).thenReturn(taskStub);
+        Assert.assertEquals(taskStub, taskManagerStub.getTaskById(19));
+    }
+
+    @Test
+    public void whenGetEpicById_thenGetEpic() {
+        epicStub.setId(19);
+        Mockito.when(taskManagerStub.getEpicById(19)).thenReturn(epicStub);
+        Assert.assertEquals(epicStub, taskManagerStub.getEpicById(19));
+    }
+
+    @Test
+    public void whenGetSubTaskById_thenGetSubTask() {
+        subTaskStub.setId(19);
+        Mockito.when(taskManagerStub.getSubTaskById(19)).thenReturn(subTaskStub);
+        Assert.assertEquals(subTaskStub, taskManagerStub.getSubTaskById(19));
+    }
+
+    @Test
+    public void whenGetHistoryTasksFromTaskManager_thenGet10HistoryEntries() {
+
+        HistoryManagerService historyManagerStub = Mockito.mock(HistoryManagerService.class);
+        List historyListStub = Mockito.mock(List.class);
+
+        Mockito.when(taskManagerStub.getHistoryManager()).thenReturn(historyManagerStub);
+        Mockito.when(historyManagerStub.getHistory()).thenReturn(historyListStub);
+        Mockito.when(historyListStub.size()).thenReturn(10);
+
+        Assert.assertEquals(10, historyListStub.size());
     }
 
 }
