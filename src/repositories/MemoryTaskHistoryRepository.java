@@ -15,12 +15,10 @@ public class MemoryTaskHistoryRepository implements TaskHistoryRepository{
 
     @Override
     public void add(AbstractTask task) {
-
         taskHistory.add(task);
         if (taskHistory.size() > QUEUE_SIZE) {
             taskHistory.remove(0);
         }
-
     }
 
     @Override
