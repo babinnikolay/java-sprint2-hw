@@ -1,28 +1,30 @@
 package repositories;
 
+import repositories.domain.TaskHistoryList;
 import tasks.AbstractTask;
 
-import java.util.LinkedList;
 import java.util.List;
 
 public class MemoryTaskHistoryRepository implements TaskHistoryRepository{
-    private final List<AbstractTask> taskHistory;
-    private static final int QUEUE_SIZE = 10;
+    private final TaskHistoryList taskHistory;
 
     public MemoryTaskHistoryRepository() {
-        taskHistory = new LinkedList<>();
+        taskHistory = new TaskHistoryList();
     }
 
     @Override
     public void add(AbstractTask task) {
-        taskHistory.add(task);
-        if (taskHistory.size() > QUEUE_SIZE) {
-            taskHistory.remove(0);
-        }
+        taskHistory.linkLast(task);
+    }
+
+    @Override
+    public void remove(int id) {
+        taskHistory.remove(id);
     }
 
     @Override
     public List<AbstractTask> history() {
-        return taskHistory;
+        return taskHistory.getHistory();
     }
+
 }

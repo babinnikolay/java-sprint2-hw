@@ -19,6 +19,11 @@ public class HistoryManagerService implements HistoryManager {
     }
 
     @Override
+    public void remove(int id) {
+        historyRepository.remove(id);
+    }
+
+    @Override
     public List<AbstractTask> getHistory() {
         return historyRepository.history();
     }

@@ -39,4 +39,14 @@ public abstract class AbstractTask {
     public TaskStatus getStatus() {
         return status;
     }
+
+    @Override
+    public String toString() {
+        return "AbstractTask{" +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", id=" + id +
+                ", status=" + status +
+                '}';
+    }
 }

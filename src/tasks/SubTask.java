@@ -17,4 +17,15 @@ public class SubTask extends AbstractTask{
         super.setStatus(status);
         parent.updateStatus();
     }
+
+    @Override
+    public String toString() {
+        return "SubTask{" +
+                "name='" + this.getName() + '\'' +
+                ", description='" + this.getDescription() + '\'' +
+                ", id=" + this.getId() +
+                ", status=" + this.getStatus() +
+                ", parentId=" + this.parent.getId() +
+                '}';
+    }
 }

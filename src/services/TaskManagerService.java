@@ -114,6 +114,7 @@ public class TaskManagerService implements TaskManager {
 
     @Override
     public void deleteTaskById(int id) {
+        history.remove(id);
         repository.deleteTaskById(id);
     }
 
@@ -125,6 +126,7 @@ public class TaskManagerService implements TaskManager {
         epic.getSubTasks().remove(subTask);
         epic.updateStatus();
 
+        history.remove(id);
         repository.deleteSubTaskById(id);
     }
 
@@ -135,8 +137,9 @@ public class TaskManagerService implements TaskManager {
         List<SubTask> subTasks = epic.getSubTasks();
         for (SubTask subTask : subTasks) {
             repository.deleteSubTaskById(subTask.getId());
+            history.remove(subTask.getId());
         }
-
+        history.remove(id);
         repository.deleteEpicById(id);
     }
 
