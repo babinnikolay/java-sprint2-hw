@@ -108,17 +108,23 @@ public class MemoryTaskRepository implements TaskRepository{
 
     @Override
     public void deleteTaskById(int id) {
-        tasks.remove(id);
+        if (tasks.containsKey(id)) {
+            tasks.remove(id);
+        }
     }
 
     @Override
     public void deleteSubTaskById(int id) {
-        subTasks.remove(id);
+        if (subTasks.containsKey(id)) {
+            subTasks.remove(id);
+        }
     }
 
     @Override
     public void deleteEpicById(int id) {
-        epics.remove(id);
+        if (epics.containsKey(id)) {
+            epics.remove(id);
+        }
     }
 
     @Override
