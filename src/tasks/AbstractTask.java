@@ -1,10 +1,13 @@
 package tasks;
 
-public abstract class AbstractTask {
+import java.io.Serializable;
+
+public abstract class AbstractTask implements Serializable {
     private String name;
     private String description;
     private int id;
     private TaskStatus status;
+    private long serialVersionUID;
 
     protected AbstractTask(String name, String description, TaskStatus status) {
         this.name = name;
@@ -14,6 +17,7 @@ public abstract class AbstractTask {
 
     public void setId(int id) {
         this.id = id;
+        this.serialVersionUID = id;
     }
 
     public int getId() {

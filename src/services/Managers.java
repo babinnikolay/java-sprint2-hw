@@ -1,7 +1,8 @@
 package services;
 
-import repositories.MemoryTaskHistoryRepository;
-import repositories.MemoryTaskRepository;
+import repositories.InMemoryTaskHistoryRepository;
+import repositories.InMemoryTaskRepository;
+
 
 public class Managers {
 
@@ -9,10 +10,10 @@ public class Managers {
     }
 
     public static TaskManager getDefault() {
-        return new TaskManagerService(new MemoryTaskRepository());
+        return new TaskManagerService(new InMemoryTaskRepository(), getDefaultHistory());
     }
 
     public static HistoryManager getDefaultHistory() {
-        return new HistoryManagerService(new MemoryTaskHistoryRepository());
+        return new HistoryManagerService(new InMemoryTaskHistoryRepository());
     }
 }

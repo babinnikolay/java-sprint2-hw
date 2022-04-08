@@ -1,8 +1,11 @@
 package util;
 
+import repositories.FileBackedTaskHistoryRepository;
+import repositories.FileBackedTaskRepository;
 import services.HistoryManager;
-import services.Managers;
+import services.HistoryManagerService;
 import services.TaskManager;
+import services.TaskManagerService;
 import tasks.AbstractTask;
 import tasks.Epic;
 import tasks.SubTask;
@@ -12,7 +15,12 @@ public class TaskHistoryTester {
 
     public static void main(String[] args) {
 
-        TaskManager taskManager = Managers.getDefault();
+        FileBackedTaskHistoryRepository historyRepository = new FileBackedTaskHistoryRepository();
+        FileBackedTaskRepository taskRepository = new FileBackedTaskRepository();
+
+        HistoryManagerService historyManagerService = new HistoryManagerService(historyRepository);
+        TaskManager taskManager = new TaskManagerService(taskRepository, historyManagerService);
+
         HistoryManager historyManager = taskManager.getHistoryManager();
         Task task1 = new Task("task1", "");
         Task task2 = new Task("task2", "");
@@ -28,29 +36,14 @@ public class TaskHistoryTester {
             taskManager.createSubTask(subTask);
         }
 
+        System.out.println(taskManager.getAllTasks());
+        System.out.println(taskManager.getAllEpics());
+        System.out.println(taskManager.getAllSubTasks());
+
         taskManager.getTaskById(2);
         taskManager.getTaskById(1);
         taskManager.getEpicById(4);
         taskManager.getEpicById(3);
-
-        printHistory(historyManager);
-
-        taskManager.getSubTaskById(7);
-        taskManager.getSubTaskById(5);
-
-        printHistory(historyManager);
-
-        taskManager.getSubTaskById(6);
-        taskManager.getSubTaskById(5);
-        taskManager.getSubTaskById(7);
-
-        printHistory(historyManager);
-
-        taskManager.deleteTaskById(2);
-
-        printHistory(historyManager);
-
-        taskManager.deleteEpicById(3);
 
         printHistory(historyManager);
 

@@ -11,9 +11,9 @@ public class TaskManagerService implements TaskManager {
     private final TaskRepository repository;
     private final HistoryManager history;
 
-    public TaskManagerService(TaskRepository taskRepository) {
+    public TaskManagerService(TaskRepository taskRepository, HistoryManager history) {
         this.repository = taskRepository;
-        this.history = Managers.getDefaultHistory();
+        this.history = history;
     }
 
     public HistoryManager getHistoryManager() {
