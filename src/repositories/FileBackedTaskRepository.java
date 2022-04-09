@@ -1,7 +1,6 @@
 package repositories;
 
-import exceptions.FileBackedLoadError;
-import exceptions.FileBackedSaveError;
+import exceptions.ManagerSaveException;
 import repositories.services.TaskRepositoryService;
 import tasks.Epic;
 import tasks.SubTask;
@@ -13,6 +12,11 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
+// >>А почему нельзя было наследоваться от TaskRepositoryService и избавиться от всех этих однострочных методов?
+// >>Однострочные методы, состоящие из одной super, не добавляют никакой новой функциональности. Поэтому они не нужны.
+//
+// Наследования нет, о каких вызовах super идет речь?
+// Мне не нравится идея применять в этом месте наследование, композиция прозрачнее
 public class FileBackedTaskRepository implements TaskRepository{
     private TaskRepositoryService service;
 
@@ -121,11 +125,11 @@ public class FileBackedTaskRepository implements TaskRepository{
         return service.getAllSubTasksOfEpic(epic);
     }
 
-    public void save() throws FileBackedSaveError {
+    public void save() {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(FILE_DB_PATH.toFile()))) {
             oos.writeObject(service);
         } catch (IOException e) {
-            throw new FileBackedSaveError();
+            throw new ManagerSaveException();
         }
     }
 
@@ -134,7 +138,7 @@ public class FileBackedTaskRepository implements TaskRepository{
             try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(FILE_DB_PATH.toFile()))) {
                 service = (TaskRepositoryService) ois.readObject();
             } catch (IOException | ClassNotFoundException e) {
-                throw new FileBackedLoadError();
+                throw new ManagerSaveException();
             }
         }
     }

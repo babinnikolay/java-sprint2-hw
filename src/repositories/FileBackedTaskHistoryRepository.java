@@ -1,7 +1,6 @@
 package repositories;
 
-import exceptions.FileBackedLoadError;
-import exceptions.FileBackedSaveError;
+import exceptions.ManagerSaveException;
 import repositories.services.TaskHistoryRepositoryService;
 import tasks.AbstractTask;
 
@@ -40,7 +39,7 @@ public class FileBackedTaskHistoryRepository implements TaskHistoryRepository{
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(FILE_DB_PATH.toFile()))) {
             oos.writeObject(service);
         } catch (IOException e) {
-            throw new FileBackedSaveError();
+            throw new ManagerSaveException();
         }
     }
 
@@ -49,7 +48,7 @@ public class FileBackedTaskHistoryRepository implements TaskHistoryRepository{
             try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(FILE_DB_PATH.toFile()))) {
                 service = (TaskHistoryRepositoryService) ois.readObject();
             } catch (IOException | ClassNotFoundException e) {
-                throw new FileBackedLoadError();
+                throw new ManagerSaveException();
             }
         }
     }
