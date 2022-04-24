@@ -1,8 +1,6 @@
 
 =
 src/Main.java,9\2\924f089edb4af5ee45c8a9d1129cd28e2b368138
-F
-src/tasks/SubTask.java,3\a\3a5a296aa2ddc097348e64ea8407638c5f35be25
 I
 src/tasks/TaskStatus.java,6\a\6a8fdf9cab4dd4b1b0dd4f892822dc7f3940d15f
 G
