@@ -1,5 +1,6 @@
 package repositories;
 
+import repositories.domain.TaskHistoryList;
 import repositories.services.TaskHistoryRepositoryService;
 import tasks.AbstractTask;
 
@@ -9,7 +10,7 @@ public class InMemoryTaskHistoryRepository implements TaskHistoryRepository{
     private final TaskHistoryRepositoryService service;
 
     public InMemoryTaskHistoryRepository() {
-        service = new TaskHistoryRepositoryService();
+        service = new TaskHistoryRepositoryService(new TaskHistoryList());
     }
 
     @Override

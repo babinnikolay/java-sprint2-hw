@@ -9,8 +9,8 @@ import java.util.List;
 public class TaskHistoryRepositoryService implements Serializable {
     private final TaskHistoryList taskHistory;
 
-    public TaskHistoryRepositoryService() {
-        taskHistory = new TaskHistoryList();
+    public TaskHistoryRepositoryService(TaskHistoryList taskHistory) {
+        this.taskHistory = taskHistory;
     }
 
     public void add(AbstractTask task) {

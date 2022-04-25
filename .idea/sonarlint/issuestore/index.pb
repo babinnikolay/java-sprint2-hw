@@ -2,14 +2,26 @@
 =
 src/Main.java,9\2\924f089edb4af5ee45c8a9d1129cd28e2b368138
 P
- .idea/libraries/mockito_core.xml,3\8\386589a0e6c57d6a79efdac970e9bc5b7ab9de8c
-Y
-).idea/runConfigurations/RUN_ALL_TESTS.xml,f\5\f578f981f4ce8a2c3bb137786a5e1ffc33039e67
-[
-+.idea/libraries/powermock_module_junit4.xml,1\e\1e9c27dcd35aaea9d75e26680e8ce9ce73f58cd8
-P
  src/services/HistoryManager.java,8\2\82faab36a0080b90061bae592dc474b48d4fde31
-J
-tests/TaskManagerTest.java,f\b\fb8eb451c54104c9cfc512323b97115ad7de3c04
+9
+	README.md,8/e/8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
 M
-tests/HistoryManagerTest.java,d\2\d2272f01a3f6777ee3f2a84ce42da43652d8903d
+src/services/TaskManager.java,a/a/aa0038859f7d9e933be58852506b646ccbc44348
+c
+3.idea/libraries/org_mockito_mockito_all_1_10_19.xml,f/d/fd068c5f829ea3619d4c22abf7e4088e5f77a0e5
+C
+java-sprint2-hw.iml,d/d/dd86aa360b270d32ce750cd9f6b0370a4b4495d6
+T
+$src/services/TaskManagerService.java,4/d/4dce181f1fc4d00ac1c501f4c832c8cce4ae5722
+W
+'src/services/HistoryManagerService.java,2/6/2640ef6ce2a7fc51b68d6a142508603f76a4f7bf
+T
+$src/repositories/TaskRepository.java,1/f/1f9ee9035aa20b1377e89c400eb7ea384f8b5572
+[
++src/repositories/TaskHistoryRepository.java,e/c/ec46545fc42431d9c6ecbd4ae37821ef4b4d0bbf
+d
+4src/repositories/services/TaskRepositoryService.java,4/5/458fec9b50a841d5f55eff67d7a73406d8f908f5
+Y
+)test/services/TaskManagerServiceTest.java,1/8/186362c4a1f86e9933eeef048813857c8ffd8ac5
+\
+,test/services/HistoryManagerServiceTest.java,e/9/e9b56ddc6056d62a6b3cf215cecaac3fa59a6238

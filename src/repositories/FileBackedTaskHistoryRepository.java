@@ -1,6 +1,7 @@
 package repositories;
 
 import exceptions.ManagerSaveException;
+import repositories.domain.TaskHistoryList;
 import repositories.services.TaskHistoryRepositoryService;
 import tasks.AbstractTask;
 
@@ -15,7 +16,7 @@ public class FileBackedTaskHistoryRepository implements TaskHistoryRepository{
     public static final Path FILE_DB_PATH = Paths.get( "resources","fileHistoryTaskDB.ser");
 
     public FileBackedTaskHistoryRepository() {
-        service = new TaskHistoryRepositoryService();
+        service = new TaskHistoryRepositoryService(new TaskHistoryList());
     }
 
     @Override
