@@ -21,7 +21,3 @@ $src/repositories/TaskRepository.java,1/f/1f9ee9035aa20b1377e89c400eb7ea384f8b5
 +src/repositories/TaskHistoryRepository.java,e/c/ec46545fc42431d9c6ecbd4ae37821ef4b4d0bbf
 d
 4src/repositories/services/TaskRepositoryService.java,4/5/458fec9b50a841d5f55eff67d7a73406d8f908f5
-Y
-)test/services/TaskManagerServiceTest.java,1/8/186362c4a1f86e9933eeef048813857c8ffd8ac5
-\
-,test/services/HistoryManagerServiceTest.java,e/9/e9b56ddc6056d62a6b3cf215cecaac3fa59a6238

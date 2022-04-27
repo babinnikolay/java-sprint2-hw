@@ -15,8 +15,8 @@ public class TaskHistoryList implements Serializable {
     private Node last;
     private final Map<Integer, Node> nodes;
 
-    public TaskHistoryList() {
-        nodes = new HashMap<>();
+    public TaskHistoryList(Map nodes) {
+        this.nodes = nodes;
     }
 
     public void linkLast(AbstractTask task) {
@@ -39,18 +39,18 @@ public class TaskHistoryList implements Serializable {
             throw new NoSuchElementException();
         }
         Node node = nodes.get(id);
-        Node prev = node.prev;
-        Node next = node.next;
+        Node prev = node.getPrev();;
+        Node next = node.getNext();
         if (prev != null && next != null) {
-            prev.next = next;
-            next.prev = prev;
+            prev.setNext(next);
+            next.setPrev(prev);
         }
         if (prev == null) {
-            next.prev = null;
+            next.setPrev(null);
             head = next;
         }
         if (next == null) {
-            prev.next = null;
+            prev.setNext(null);
             last = prev;
         }
         nodes.remove(id);
@@ -69,6 +69,23 @@ public class TaskHistoryList implements Serializable {
     private static class Node implements Serializable{
         private Node prev;
         private final AbstractTask task;
+
+        public Node getPrev() {
+            return prev;
+        }
+
+        public void setPrev(Node prev) {
+            this.prev = prev;
+        }
+
+        public Node getNext() {
+            return next;
+        }
+
+        public void setNext(Node next) {
+            this.next = next;
+        }
+
         private Node next;
 
         public Node(Node prev, AbstractTask task, Node next) {
