@@ -3,6 +3,7 @@ package repositories;
 import tasks.*;
 
 import java.util.List;
+import java.util.Set;
 
 public interface TaskRepository {
 
@@ -11,6 +12,8 @@ public interface TaskRepository {
     List<Task> getAllTasks();
     List<Epic> getAllEpics();
     List<SubTask> getAllSubTasks();
+
+    Set<AbstractTask> getPrioritizedTasks();
 
     void removeAllByType(TaskType type);
 

@@ -1,10 +1,14 @@
 package tasks;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Epic extends AbstractTask {
     private final List<SubTask> subTasks;
+    private LocalDateTime endTime;
 
     public Epic(String name, String description) {
         super(name, description, TaskStatus.NEW);
@@ -18,6 +22,39 @@ public class Epic extends AbstractTask {
     public void addSubTask(SubTask subTask) {
         subTasks.add(subTask);
         updateStatus();
+        updateTimeFields();
+    }
+
+    public LocalDateTime getEndTime() {
+        return endTime;
+    }
+
+    private void setEndTime(LocalDateTime endTime) {
+        this.endTime = endTime;
+    }
+
+    public void updateTimeFields() {
+        if (subTasks.isEmpty()) {
+            setDuration(Duration.ZERO);
+            setStartTime(null);
+            setEndTime(null);
+            return;
+        }
+        for (SubTask subTask : subTasks) {
+            if (getStartTime() == null) {
+                setStartTime(subTask.getStartTime());
+            }
+            if (getEndTime() == null) {
+                setEndTime(subTask.getEndTime());
+            }
+            if (subTask.getStartTime().isBefore(getStartTime())) {
+                setStartTime(subTask.getStartTime());
+            }
+            if (subTask.getEndTime().isAfter(getEndTime())) {
+                setEndTime(subTask.getEndTime());
+            }
+        }
+        setDuration(Duration.between(getStartTime(), getEndTime()));
     }
 
     public void updateStatus() {

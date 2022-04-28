@@ -3,6 +3,7 @@ package services;
 import tasks.*;
 
 import java.util.List;
+import java.util.Set;
 
 public interface TaskManager {
 
@@ -11,6 +12,8 @@ public interface TaskManager {
     List<Epic> getAllEpics();
 
     List<SubTask> getAllSubTasks();
+
+    Set<AbstractTask> getPrioritizedTasks();
 
     void removeAllTasks();
 

@@ -1,11 +1,10 @@
 package services;
 
 import repositories.TaskRepository;
-import tasks.Task;
-import tasks.Epic;
-import tasks.SubTask;
-import tasks.TaskType;
+import tasks.*;
+
 import java.util.List;
+import java.util.Set;
 
 public class TaskManagerService implements TaskManager {
     private final TaskRepository repository;
@@ -36,6 +35,11 @@ public class TaskManagerService implements TaskManager {
     }
 
     @Override
+    public Set<AbstractTask> getPrioritizedTasks() {
+        return repository.getPrioritizedTasks();
+    }
+
+    @Override
     public void removeAllTasks() {
         repository.removeAllByType(TaskType.TASK);
     }
@@ -52,6 +56,7 @@ public class TaskManagerService implements TaskManager {
         for (Epic epic : repository.getAllEpics()) {
             epic.getSubTasks().clear();
             epic.updateStatus();
+            epic.updateTimeFields();
         }
     }
 
@@ -104,12 +109,14 @@ public class TaskManagerService implements TaskManager {
     public void updateEpic(Epic epic) {
         repository.updateEpic(epic);
         epic.updateStatus();
+        epic.updateTimeFields();
     }
 
     @Override
     public void updateSubTask(SubTask subTask) {
         repository.updateSubTask(subTask);
         subTask.getParent().updateStatus();
+        subTask.getParent().updateTimeFields();
     }
 
     @Override
@@ -125,6 +132,7 @@ public class TaskManagerService implements TaskManager {
         Epic epic = subTask.getParent();
         epic.getSubTasks().remove(subTask);
         epic.updateStatus();
+        epic.updateTimeFields();
 
         history.remove(id);
         repository.deleteSubTaskById(id);

@@ -2,15 +2,13 @@ package repositories;
 
 import exceptions.ManagerSaveException;
 import repositories.services.TaskRepositoryService;
-import tasks.Epic;
-import tasks.SubTask;
-import tasks.Task;
-import tasks.TaskType;
+import tasks.*;
 
 import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Set;
 
 // >>А почему нельзя было наследоваться от TaskRepositoryService и избавиться от всех этих однострочных методов?
 // >>Однострочные методы, состоящие из одной super, не добавляют никакой новой функциональности. Поэтому они не нужны.
@@ -46,6 +44,10 @@ public class FileBackedTaskRepository implements TaskRepository{
         return service.getAllSubTasks();
     }
 
+    @Override
+    public Set<AbstractTask> getPrioritizedTasks() {
+        return service.getPrioritizedTasks();
+    }
     @Override
     public void removeAllByType(TaskType type) {
         service.removeAllByType(type);

@@ -5,17 +5,19 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import repositories.domain.TaskHistoryList;
-import tasks.SubTask;
+import tasks.Epic;
+
+import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 class FileBackedTaskRepositoryTest {
 
     FileBackedTaskRepository taskRepository;
 
     @Mock
-    SubTask subTaskStub;
+    Epic epicStub;
 
     @BeforeEach
     public void setUp() {
@@ -34,9 +36,10 @@ class FileBackedTaskRepositoryTest {
 
     @Test
     public void Should_Save_When_SaveEpicWithoutSubTask() {
+        when(epicStub.getStartTime()).thenReturn(LocalDateTime.MIN);
         assertThrows(
                 ManagerSaveException.class,
-                () -> taskRepository.createSubTask(subTaskStub),
+                () -> taskRepository.createEpic(epicStub),
                 "non-existent id"
         );
     }

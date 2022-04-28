@@ -254,7 +254,7 @@ class TaskManagerServiceTest {
         when(subTask1Stub.getParent()).thenReturn(epicStub);
         taskManager.updateSubTask(subTask1Stub);
         verify(taskRepositoryStub).updateSubTask(subTask1Stub);
-        verify(subTask1Stub).getParent();
+        verify(subTask1Stub, times(2)).getParent();
         verify(epicStub).updateStatus();
     }
 

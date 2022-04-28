@@ -1,6 +1,9 @@
 package tasks;
 
 import java.io.Serializable;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.util.Objects;
 
 public abstract class AbstractTask implements Serializable {
     private String name;
@@ -8,6 +11,8 @@ public abstract class AbstractTask implements Serializable {
     private int id;
     private TaskStatus status;
     private long serialVersionUID;
+    Duration duration;
+    LocalDateTime startTime;
 
     protected AbstractTask(String name, String description, TaskStatus status) {
         this.name = name;
@@ -42,6 +47,26 @@ public abstract class AbstractTask implements Serializable {
 
     public TaskStatus getStatus() {
         return status;
+    }
+
+    public LocalDateTime getEndTime() {
+        return startTime.plusSeconds(duration.toSeconds());
+    }
+
+    public void setDuration(Duration duration) {
+        this.duration = duration;
+    }
+
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public Duration getDuration() {
+        return duration;
     }
 
     @Override

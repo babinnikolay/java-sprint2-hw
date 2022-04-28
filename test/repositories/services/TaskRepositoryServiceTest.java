@@ -4,12 +4,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import tasks.Epic;
-import tasks.SubTask;
-import tasks.Task;
-import tasks.TaskType;
+import tasks.*;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -51,7 +51,9 @@ class TaskRepositoryServiceTest {
     @Test
     public void Should_ListOfTaskAndNotNull_When_GetAllTasks() {
         when(taskStub1.getId()).thenReturn(1);
+        when(taskStub1.getStartTime()).thenReturn(LocalDateTime.MIN);
         taskRepositoryService.createTask(taskStub1);
+
         assertEquals(1, taskRepositoryService.getAllTasks().size());
         assertNotNull(taskRepositoryService.getAllTasks());
     }
@@ -60,6 +62,8 @@ class TaskRepositoryServiceTest {
     public void Should_ClearAllTasks_When_RemoveAllByTypeTask() {
         when(taskStub1.getId()).thenReturn(1);
         when(taskStub2.getId()).thenReturn(2);
+        when(taskStub1.getStartTime()).thenReturn(LocalDateTime.MIN);
+        when(taskStub2.getStartTime()).thenReturn(LocalDateTime.MIN);
 
         taskRepositoryService.createTask(taskStub1);
         taskRepositoryService.createTask(taskStub2);
@@ -71,6 +75,7 @@ class TaskRepositoryServiceTest {
     @Test
     public void Should_ReturnTask_When_GetTaskByExistentId() {
         when(taskStub1.getId()).thenReturn(1);
+        when(taskStub1.getStartTime()).thenReturn(LocalDateTime.MIN);
 
         taskRepositoryService.createTask(taskStub1);
         assertEquals(1, taskRepositoryService.getTaskById(1).getId());
@@ -86,6 +91,8 @@ class TaskRepositoryServiceTest {
     public void Should_CreateTasks_When_CreateTask() {
         when(taskStub1.getId()).thenReturn(1);
         when(taskStub2.getId()).thenReturn(2);
+        when(taskStub1.getStartTime()).thenReturn(LocalDateTime.MIN);
+        when(taskStub2.getStartTime()).thenReturn(LocalDateTime.MIN);
 
         taskRepositoryService.createTask(taskStub1);
         taskRepositoryService.createTask(taskStub2);
@@ -98,6 +105,7 @@ class TaskRepositoryServiceTest {
     public void Should_GetUpdatedTask_When_UpdateTask() {
         when(taskStub1.getId()).thenReturn(1);
         when(taskStub1.getName()).thenReturn("original");
+        when(taskStub1.getStartTime()).thenReturn(LocalDateTime.MIN);
 
         taskRepositoryService.createTask(taskStub1);
         assertEquals("original", taskRepositoryService.getTaskById(1).getName());
@@ -110,6 +118,8 @@ class TaskRepositoryServiceTest {
     @Test
     public void Should_RemoveTask_When_DeleteTaskByExistentId() {
         when(taskStub1.getId()).thenReturn(1);
+        when(taskStub1.getStartTime()).thenReturn(LocalDateTime.MIN);
+
         taskRepositoryService.createTask(taskStub1);
 
         assertEquals(1, taskRepositoryService.getAllTasks().size());
@@ -128,6 +138,8 @@ class TaskRepositoryServiceTest {
     @Test
     public void Should_ListOfEpicAndNotNull_When_GetAllEpics() {
         when(epicStub1.getId()).thenReturn(1);
+        when(epicStub1.getStartTime()).thenReturn(LocalDateTime.MIN);
+
         taskRepositoryService.createEpic(epicStub1);
         assertEquals(1, taskRepositoryService.getAllEpics().size());
         assertNotNull(taskRepositoryService.getAllEpics());
@@ -137,6 +149,8 @@ class TaskRepositoryServiceTest {
     public void Should_ClearAllEpicsAndSubTasks_When_RemoveAllByTypeEpic() {
         when(epicStub1.getId()).thenReturn(1);
         when(epicStub2.getId()).thenReturn(2);
+        when(epicStub1.getStartTime()).thenReturn(LocalDateTime.MIN);
+        when(epicStub2.getStartTime()).thenReturn(LocalDateTime.MIN);
 
         taskRepositoryService.createEpic(epicStub1);
         taskRepositoryService.createEpic(epicStub2);
@@ -155,6 +169,8 @@ class TaskRepositoryServiceTest {
     public void Should_CreateEpics_When_CreateEpic() {
         when(epicStub1.getId()).thenReturn(1);
         when(epicStub2.getId()).thenReturn(2);
+        when(epicStub1.getStartTime()).thenReturn(LocalDateTime.MIN);
+        when(epicStub2.getStartTime()).thenReturn(LocalDateTime.MIN);
 
         taskRepositoryService.createEpic(epicStub1);
         taskRepositoryService.createEpic(epicStub2);
@@ -167,6 +183,7 @@ class TaskRepositoryServiceTest {
     public void Should_GetUpdatedEpic_When_UpdateEpic() {
         when(epicStub1.getId()).thenReturn(1);
         when(epicStub1.getName()).thenReturn("original");
+        when(epicStub1.getStartTime()).thenReturn(LocalDateTime.MIN);
 
         taskRepositoryService.createEpic(epicStub1);
         assertEquals("original", taskRepositoryService.getEpicById(1).getName());
@@ -179,6 +196,8 @@ class TaskRepositoryServiceTest {
     @Test
     public void Should_RemoveEpic_When_DeleteEpicByExistentId() {
         when(epicStub1.getId()).thenReturn(1);
+        when(epicStub1.getStartTime()).thenReturn(LocalDateTime.MIN);
+
         taskRepositoryService.createEpic(epicStub1);
 
         assertEquals(1, taskRepositoryService.getAllEpics().size());
@@ -198,6 +217,8 @@ class TaskRepositoryServiceTest {
     public void Should_ListOfSubtasksAndNotNull_When_GetAllSubTasks() {
         when(subTask1Stub.getId()).thenReturn(1);
         when(subTask2Stub.getId()).thenReturn(2);
+        when(subTask1Stub.getStartTime()).thenReturn(LocalDateTime.MIN);
+        when(subTask2Stub.getStartTime()).thenReturn(LocalDateTime.MIN);
 
         taskRepositoryService.createSubTask(subTask1Stub);
         taskRepositoryService.createSubTask(subTask2Stub);
@@ -209,6 +230,7 @@ class TaskRepositoryServiceTest {
     @Test
     public void Should_ClearAllSubTasks_When_RemoveAllByTypeSubTask() {
         when(subTask1Stub.getId()).thenReturn(1);
+        when(subTask1Stub.getStartTime()).thenReturn(LocalDateTime.MIN);
 
         taskRepositoryService.createSubTask(subTask1Stub);
 
@@ -225,6 +247,8 @@ class TaskRepositoryServiceTest {
     public void Should_CreateSubtasks_When_CreateSubTask() {
         when(subTask1Stub.getId()).thenReturn(1);
         when(subTask2Stub.getId()).thenReturn(2);
+        when(subTask1Stub.getStartTime()).thenReturn(LocalDateTime.MIN);
+        when(subTask2Stub.getStartTime()).thenReturn(LocalDateTime.MIN);
 
         taskRepositoryService.createSubTask(subTask1Stub);
         taskRepositoryService.createSubTask(subTask2Stub);
@@ -237,6 +261,7 @@ class TaskRepositoryServiceTest {
     public void Should_GetUpdatedSubTask_When_UpdateSubTask() {
         when(subTask1Stub.getId()).thenReturn(1);
         when(subTask1Stub.getName()).thenReturn("original");
+        when(subTask1Stub.getStartTime()).thenReturn(LocalDateTime.MIN);
 
         taskRepositoryService.createSubTask(subTask1Stub);
         assertEquals("original", taskRepositoryService.getSubTaskById(1).getName());
@@ -249,6 +274,8 @@ class TaskRepositoryServiceTest {
     @Test
     public void Should_RemoveSubTask_When_DeleteSubTaskByExistentId() {
         when(subTask1Stub.getId()).thenReturn(1);
+        when(subTask1Stub.getStartTime()).thenReturn(LocalDateTime.MIN);
+
         taskRepositoryService.createSubTask(subTask1Stub);
 
         assertEquals(1, taskRepositoryService.getAllSubTasks().size());
@@ -264,13 +291,51 @@ class TaskRepositoryServiceTest {
     }
 
     // other
-
     @Test
     public void Should_ReturnListOfEpics_When_GetAllSubTasksOfEpic() {
         List<SubTask> subTasksList = List.of(subTask1Stub, subTask2Stub);
         when(epicStub1.getSubTasks()).thenReturn(subTasksList);
 
         assertEquals(subTasksList, taskRepositoryService.getAllSubTasksOfEpic(epicStub1));
+    }
+
+    @Test
+    public void Should_ReturnPrioritizedSet_When_GetPrioritizedTasks() {
+        LocalDateTime minDateTimeStart
+                = LocalDateTime.of(2022, 1, 1, 1, 1, 1);
+        LocalDateTime minDateTimeEnd
+                = LocalDateTime.of(2022, 1, 1, 1, 30, 1);
+
+        LocalDateTime midDateTimeStart
+                = LocalDateTime.of(2022, 1, 1, 2, 1, 1);
+        LocalDateTime midDateTimeEnd
+                = LocalDateTime.of(2022, 1, 1, 2, 30, 1);
+
+        LocalDateTime maxDateTimeStart
+                = LocalDateTime.of(2022, 1, 1, 3, 1, 1);
+        LocalDateTime maxDateTimeEnd
+                = LocalDateTime.of(2022, 1, 1, 3, 30, 1);
+
+        when(taskStub1.getStartTime()).thenReturn(midDateTimeStart);
+        when(taskStub2.getStartTime()).thenReturn(maxDateTimeStart);
+        when(subTask1Stub.getStartTime()).thenReturn(minDateTimeStart);
+
+        when(taskStub1.getEndTime()).thenReturn(midDateTimeEnd);
+        when(taskStub2.getEndTime()).thenReturn(maxDateTimeEnd);
+        when(subTask1Stub.getEndTime()).thenReturn(minDateTimeEnd);
+
+        when(taskStub1.getId()).thenReturn(1);
+        when(taskStub2.getId()).thenReturn(2);
+        when(subTask1Stub.getId()).thenReturn(3);
+
+        taskRepositoryService.createTask(taskStub1);
+        taskRepositoryService.createTask(taskStub2);
+        taskRepositoryService.createSubTask(subTask1Stub);
+
+        Set<AbstractTask> prioritizedTasks = taskRepositoryService.getPrioritizedTasks();
+        List<AbstractTask> prioritizedListTasks = new ArrayList<>(prioritizedTasks);
+        assertEquals(minDateTimeStart, prioritizedListTasks.get(0).getStartTime());
+        assertEquals(maxDateTimeStart, prioritizedListTasks.get(2).getStartTime());
     }
 
 }

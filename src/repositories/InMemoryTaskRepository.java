@@ -30,7 +30,11 @@ public class InMemoryTaskRepository implements TaskRepository{
     @Override
     public List<SubTask> getAllSubTasks() {
         return service.getAllSubTasks();
+    }
 
+    @Override
+    public Set<AbstractTask> getPrioritizedTasks() {
+        return service.getPrioritizedTasks();
     }
 
     @Override
