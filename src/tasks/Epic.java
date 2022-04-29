@@ -2,7 +2,6 @@ package tasks;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +24,7 @@ public class Epic extends AbstractTask {
         updateTimeFields();
     }
 
+    @Override
     public LocalDateTime getEndTime() {
         return endTime;
     }

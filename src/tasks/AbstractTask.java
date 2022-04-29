@@ -3,14 +3,12 @@ package tasks;
 import java.io.Serializable;
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.Objects;
 
 public abstract class AbstractTask implements Serializable {
     private String name;
     private String description;
     private int id;
     private TaskStatus status;
-    private long serialVersionUID;
     Duration duration;
     LocalDateTime startTime;
 
@@ -22,7 +20,6 @@ public abstract class AbstractTask implements Serializable {
 
     public void setId(int id) {
         this.id = id;
-        this.serialVersionUID = id;
     }
 
     public int getId() {

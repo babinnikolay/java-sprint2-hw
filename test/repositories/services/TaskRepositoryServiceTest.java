@@ -52,6 +52,7 @@ class TaskRepositoryServiceTest {
     public void Should_ListOfTaskAndNotNull_When_GetAllTasks() {
         when(taskStub1.getId()).thenReturn(1);
         when(taskStub1.getStartTime()).thenReturn(LocalDateTime.MIN);
+        when(taskStub1.getEndTime()).thenReturn(LocalDateTime.MIN);
         taskRepositoryService.createTask(taskStub1);
 
         assertEquals(1, taskRepositoryService.getAllTasks().size());
@@ -63,7 +64,9 @@ class TaskRepositoryServiceTest {
         when(taskStub1.getId()).thenReturn(1);
         when(taskStub2.getId()).thenReturn(2);
         when(taskStub1.getStartTime()).thenReturn(LocalDateTime.MIN);
+        when(taskStub1.getEndTime()).thenReturn(LocalDateTime.MIN);
         when(taskStub2.getStartTime()).thenReturn(LocalDateTime.MIN);
+        when(taskStub2.getEndTime()).thenReturn(LocalDateTime.MIN);
 
         taskRepositoryService.createTask(taskStub1);
         taskRepositoryService.createTask(taskStub2);
@@ -76,6 +79,7 @@ class TaskRepositoryServiceTest {
     public void Should_ReturnTask_When_GetTaskByExistentId() {
         when(taskStub1.getId()).thenReturn(1);
         when(taskStub1.getStartTime()).thenReturn(LocalDateTime.MIN);
+        when(taskStub1.getEndTime()).thenReturn(LocalDateTime.MIN);
 
         taskRepositoryService.createTask(taskStub1);
         assertEquals(1, taskRepositoryService.getTaskById(1).getId());
@@ -92,7 +96,9 @@ class TaskRepositoryServiceTest {
         when(taskStub1.getId()).thenReturn(1);
         when(taskStub2.getId()).thenReturn(2);
         when(taskStub1.getStartTime()).thenReturn(LocalDateTime.MIN);
+        when(taskStub1.getEndTime()).thenReturn(LocalDateTime.MIN);
         when(taskStub2.getStartTime()).thenReturn(LocalDateTime.MIN);
+        when(taskStub2.getEndTime()).thenReturn(LocalDateTime.MIN);
 
         taskRepositoryService.createTask(taskStub1);
         taskRepositoryService.createTask(taskStub2);
@@ -106,6 +112,7 @@ class TaskRepositoryServiceTest {
         when(taskStub1.getId()).thenReturn(1);
         when(taskStub1.getName()).thenReturn("original");
         when(taskStub1.getStartTime()).thenReturn(LocalDateTime.MIN);
+        when(taskStub1.getEndTime()).thenReturn(LocalDateTime.MIN);
 
         taskRepositoryService.createTask(taskStub1);
         assertEquals("original", taskRepositoryService.getTaskById(1).getName());
@@ -119,6 +126,7 @@ class TaskRepositoryServiceTest {
     public void Should_RemoveTask_When_DeleteTaskByExistentId() {
         when(taskStub1.getId()).thenReturn(1);
         when(taskStub1.getStartTime()).thenReturn(LocalDateTime.MIN);
+        when(taskStub1.getEndTime()).thenReturn(LocalDateTime.MIN);
 
         taskRepositoryService.createTask(taskStub1);
 
@@ -218,7 +226,9 @@ class TaskRepositoryServiceTest {
         when(subTask1Stub.getId()).thenReturn(1);
         when(subTask2Stub.getId()).thenReturn(2);
         when(subTask1Stub.getStartTime()).thenReturn(LocalDateTime.MIN);
+        when(subTask1Stub.getEndTime()).thenReturn(LocalDateTime.MIN);
         when(subTask2Stub.getStartTime()).thenReturn(LocalDateTime.MIN);
+        when(subTask2Stub.getEndTime()).thenReturn(LocalDateTime.MIN);
 
         taskRepositoryService.createSubTask(subTask1Stub);
         taskRepositoryService.createSubTask(subTask2Stub);
@@ -231,6 +241,7 @@ class TaskRepositoryServiceTest {
     public void Should_ClearAllSubTasks_When_RemoveAllByTypeSubTask() {
         when(subTask1Stub.getId()).thenReturn(1);
         when(subTask1Stub.getStartTime()).thenReturn(LocalDateTime.MIN);
+        when(subTask1Stub.getEndTime()).thenReturn(LocalDateTime.MIN);
 
         taskRepositoryService.createSubTask(subTask1Stub);
 
@@ -248,7 +259,9 @@ class TaskRepositoryServiceTest {
         when(subTask1Stub.getId()).thenReturn(1);
         when(subTask2Stub.getId()).thenReturn(2);
         when(subTask1Stub.getStartTime()).thenReturn(LocalDateTime.MIN);
+        when(subTask1Stub.getEndTime()).thenReturn(LocalDateTime.MIN);
         when(subTask2Stub.getStartTime()).thenReturn(LocalDateTime.MIN);
+        when(subTask2Stub.getEndTime()).thenReturn(LocalDateTime.MIN);
 
         taskRepositoryService.createSubTask(subTask1Stub);
         taskRepositoryService.createSubTask(subTask2Stub);
@@ -262,6 +275,7 @@ class TaskRepositoryServiceTest {
         when(subTask1Stub.getId()).thenReturn(1);
         when(subTask1Stub.getName()).thenReturn("original");
         when(subTask1Stub.getStartTime()).thenReturn(LocalDateTime.MIN);
+        when(subTask1Stub.getEndTime()).thenReturn(LocalDateTime.MIN);
 
         taskRepositoryService.createSubTask(subTask1Stub);
         assertEquals("original", taskRepositoryService.getSubTaskById(1).getName());
@@ -275,6 +289,7 @@ class TaskRepositoryServiceTest {
     public void Should_RemoveSubTask_When_DeleteSubTaskByExistentId() {
         when(subTask1Stub.getId()).thenReturn(1);
         when(subTask1Stub.getStartTime()).thenReturn(LocalDateTime.MIN);
+        when(subTask1Stub.getEndTime()).thenReturn(LocalDateTime.MIN);
 
         taskRepositoryService.createSubTask(subTask1Stub);
 
@@ -338,4 +353,57 @@ class TaskRepositoryServiceTest {
         assertEquals(maxDateTimeStart, prioritizedListTasks.get(2).getStartTime());
     }
 
+    @Test
+    public void Should_DontAddTask_When_ThereIsAnIntersection() {
+        LocalDateTime startTime1
+                = LocalDateTime.of(2022, 1, 2, 1, 1, 1);
+        LocalDateTime endTime1
+                = LocalDateTime.of(2022, 1, 3, 1, 30, 1);
+
+        LocalDateTime startTime2
+                = LocalDateTime.of(2022, 1, 2, 1, 10, 1);
+        LocalDateTime endTime2
+                = LocalDateTime.of(2022, 1, 2, 1, 45, 1);
+
+        when(taskStub1.getStartTime()).thenReturn(startTime1);
+        when(taskStub2.getStartTime()).thenReturn(startTime2);
+
+        when(taskStub1.getEndTime()).thenReturn(endTime1);
+        when(taskStub2.getEndTime()).thenReturn(endTime2);
+
+        when(taskStub1.getId()).thenReturn(1);
+        when(taskStub2.getId()).thenReturn(2);
+
+        taskRepositoryService.createTask(taskStub1);
+        taskRepositoryService.createTask(taskStub2);
+
+        assertEquals(1, taskRepositoryService.getAllTasks().size());
+    }
+
+    @Test
+    public void Should_AddTask_When_ThereIsNotAnIntersection() {
+        LocalDateTime startTime1
+                = LocalDateTime.of(2022, 1, 2, 1, 1, 1);
+        LocalDateTime endTime1
+                = LocalDateTime.of(2022, 1, 3, 1, 30, 1);
+
+        LocalDateTime startTime2
+                = LocalDateTime.of(2022, 1, 4, 1, 46, 1);
+        LocalDateTime endTime2
+                = LocalDateTime.of(2022, 1, 4, 1, 55, 1);
+
+        when(taskStub1.getStartTime()).thenReturn(startTime1);
+        when(taskStub2.getStartTime()).thenReturn(startTime2);
+
+        when(taskStub1.getEndTime()).thenReturn(endTime1);
+        when(taskStub2.getEndTime()).thenReturn(endTime2);
+
+        when(taskStub1.getId()).thenReturn(1);
+        when(taskStub2.getId()).thenReturn(2);
+
+        taskRepositoryService.createTask(taskStub1);
+        taskRepositoryService.createTask(taskStub2);
+
+        assertEquals(2, taskRepositoryService.getAllTasks().size());
+    }
 }

@@ -17,7 +17,7 @@ public class FileBackedTaskHistoryRepository implements TaskHistoryRepository{
     public static final Path FILE_DB_PATH = Paths.get( "resources","fileHistoryTaskDB.ser");
 
     public FileBackedTaskHistoryRepository() {
-        service = new TaskHistoryRepositoryService(new TaskHistoryList(new HashMap()));
+        service = new TaskHistoryRepositoryService(new TaskHistoryList(new HashMap<>()));
     }
 
     @Override

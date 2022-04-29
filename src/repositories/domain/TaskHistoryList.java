@@ -3,7 +3,6 @@ package repositories.domain;
 import tasks.AbstractTask;
 
 import java.io.Serializable;
-import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
@@ -15,7 +14,7 @@ public class TaskHistoryList implements Serializable {
     private Node last;
     private final Map<Integer, Node> nodes;
 
-    public TaskHistoryList(Map nodes) {
+    public TaskHistoryList(Map<Integer, Node> nodes) {
         this.nodes = nodes;
     }
 
@@ -39,7 +38,7 @@ public class TaskHistoryList implements Serializable {
             throw new NoSuchElementException();
         }
         Node node = nodes.get(id);
-        Node prev = node.getPrev();;
+        Node prev = node.getPrev();
         Node next = node.getNext();
         if (prev != null && next != null) {
             prev.setNext(next);
