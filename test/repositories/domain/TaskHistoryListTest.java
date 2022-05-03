@@ -12,18 +12,18 @@ import java.util.NoSuchElementException;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-class TaskHistoryListTest {
+public class TaskHistoryListTest {
 
-    TaskHistoryList taskHistoryList;
-
-    @Mock
-    HashMap nodesStub;
+    private TaskHistoryList taskHistoryList;
 
     @Mock
-    AbstractTask abstractTask1Stub;
+    private HashMap nodesStub;
 
     @Mock
-    AbstractTask abstractTask2Stub;
+    private AbstractTask abstractTask1Stub;
+
+    @Mock
+    private AbstractTask abstractTask2Stub;
 
     @BeforeEach
     public void setUp() {
@@ -32,7 +32,7 @@ class TaskHistoryListTest {
     }
 
     @Test
-    public void Should_AddLastAbstractTask_When_LinkLast() {
+    public void shouldAddLastAbstractTaskWhenLinkLast() {
         when(abstractTask1Stub.getId()).thenReturn(1);
         when(abstractTask2Stub.getId()).thenReturn(2);
 
@@ -43,7 +43,7 @@ class TaskHistoryListTest {
     }
 
     @Test
-    public void Should_ThrowException_When_RemoveByNonExistentId() {
+    public void shouldThrowExceptionWhenRemoveByNonExistentId() {
         assertThrows(
                 NoSuchElementException.class,
                 () -> taskHistoryList.remove(10),
@@ -52,7 +52,7 @@ class TaskHistoryListTest {
     }
 
     @Test
-    public void Should_ReturnListOfAbstractTask_When_GetHistory() {
+    public void shouldReturnListOfAbstractTaskWhenGetHistory() {
         assertNotNull(taskHistoryList.getHistory());
     }
 

@@ -9,9 +9,9 @@ import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class TaskTest {
+public class TaskTest {
 
-    Task task;
+    private Task task;
 
     @BeforeEach
     public void setUp() {
@@ -20,35 +20,35 @@ class TaskTest {
     }
 
     @Test
-    public void Should_ReturnId_When_GetId() {
+    public void shouldReturnIdWhenGetId() {
         task.setId(10);
         assertEquals(10, task.getId());
     }
 
     @Test
-    public void Should_ReturnDesc_When_getDescription() {
+    public void shouldReturnDescWhenGetDescription() {
         assertEquals("Desc", task.getDescription());
     }
 
     @Test
-    public void Should_ReturnNewName_When_changeName() {
+    public void shouldReturnNewNameWhenChangeName() {
         task.setName("NewName");
         assertEquals("NewName", task.getName());
     }
 
     @Test
-    public void Should_ReturnStatusDone_When_SetStatusDone() {
+    public void shouldReturnStatusDoneWhenSetStatusDone() {
         task.setStatus(TaskStatus.DONE);
         assertEquals(TaskStatus.DONE, task.getStatus());
     }
 
     @Test
-    public void Should_ContainsSubStringAbstractTask_When_ToString() {
+    public void shouldContainsSubStringAbstractTaskWhenToString() {
         assertTrue(task.toString().contains("AbstractTask"));
     }
 
     @Test
-    public void Should_ReturnCalculateEndTime_When_GetEndTime() {
+    public void shouldReturnCalculateEndTimeWhenGetEndTime() {
         LocalDateTime controlEndTime
                 = LocalDateTime.of(2022, 1, 1, 1, 1, 20);
 

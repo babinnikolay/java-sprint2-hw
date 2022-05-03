@@ -40,6 +40,7 @@ public class Epic extends AbstractTask {
             setEndTime(null);
             return;
         }
+        Duration totalDuration = Duration.ZERO;
         for (SubTask subTask : subTasks) {
             if (getStartTime() == null) {
                 setStartTime(subTask.getStartTime());
@@ -53,8 +54,9 @@ public class Epic extends AbstractTask {
             if (subTask.getEndTime().isAfter(getEndTime())) {
                 setEndTime(subTask.getEndTime());
             }
+            totalDuration.plus(subTask.getDuration());
         }
-        setDuration(Duration.between(getStartTime(), getEndTime()));
+        setDuration(totalDuration);
     }
 
     public void updateStatus() {

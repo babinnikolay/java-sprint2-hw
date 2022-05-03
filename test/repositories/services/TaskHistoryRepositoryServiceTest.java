@@ -12,15 +12,15 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-class TaskHistoryRepositoryServiceTest {
+public class TaskHistoryRepositoryServiceTest {
 
     @Mock
-    TaskHistoryList taskHistoryStab;
+    private TaskHistoryList taskHistoryStab;
 
     @Mock
-    AbstractTask abstractTaskStub;
+    private AbstractTask abstractTaskStub;
 
-    TaskHistoryRepositoryService historyRepositoryService;
+    private TaskHistoryRepositoryService historyRepositoryService;
 
     @BeforeEach
     public void setUp() {
@@ -29,20 +29,20 @@ class TaskHistoryRepositoryServiceTest {
     }
 
     @Test
-    public void Should_CallTaskHistoryLinkLastMethod_When_Add() {
+    public void shouldCallTaskHistoryLinkLastMethodWhenAdd() {
         historyRepositoryService.add(abstractTaskStub);
         verify(taskHistoryStab).linkLast(abstractTaskStub);
     }
 
     @Test
-    public void Should_CallTaskHistoryRemoveMethod_When_Remove() {
+    public void shouldCallTaskHistoryRemoveMethodWhenRemove() {
         when(abstractTaskStub.getId()).thenReturn(1);
         historyRepositoryService.remove(abstractTaskStub.getId());
         verify(taskHistoryStab).remove(1);
     }
 
     @Test
-    public void Should_ReturnListOfAbstractTask_When_history() {
+    public void shouldReturnListOfAbstractTaskWhenHistory() {
         List<AbstractTask> abstractTaskList = List.of(abstractTaskStub);
         when(taskHistoryStab.getHistory()).thenReturn(abstractTaskList);
         assertEquals(abstractTaskList, historyRepositoryService.history());

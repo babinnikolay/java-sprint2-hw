@@ -9,8 +9,8 @@ public abstract class AbstractTask implements Serializable {
     private String description;
     private int id;
     private TaskStatus status;
-    Duration duration;
-    LocalDateTime startTime;
+    private Duration duration;
+    private LocalDateTime startTime;
 
     protected AbstractTask(String name, String description, TaskStatus status) {
         this.name = name;

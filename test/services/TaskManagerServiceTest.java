@@ -13,27 +13,27 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class TaskManagerServiceTest {
+public class TaskManagerServiceTest {
 
     @Mock
-    TaskRepository taskRepositoryStub;
+    private TaskRepository taskRepositoryStub;
 
     @Mock
-    HistoryManager historyManagerStub;
+    private HistoryManager historyManagerStub;
 
     @Mock
-    Task taskStub;
+    private Task taskStub;
 
     @Mock
-    Epic epicStub;
+    private Epic epicStub;
 
     @Mock
-    SubTask subTask1Stub;
+    private SubTask subTask1Stub;
 
     @Mock
-    SubTask subTask2Stub;
+    private SubTask subTask2Stub;
 
-    TaskManager taskManager;
+    private TaskManager taskManager;
 
     @BeforeEach
     public void setUp() {
@@ -43,13 +43,13 @@ class TaskManagerServiceTest {
 
     // Task
     @Test
-    public void Should_ReturnEmptyListOfTasks_When_TasksListIsEmpty() {
+    public void shouldReturnEmptyListOfTasksWhenTasksListIsEmpty() {
         assertEquals(0, taskManager.getAllTasks().size());
         assertNotNull(taskManager.getAllTasks());
     }
 
     @Test
-    public void Should_ReturnNotEmptyListOfTasks_When_CreateTask() {
+    public void shouldReturnNotEmptyListOfTasksWhenCreateTask() {
         List<Task> taskList = List.of(taskStub);
         when(taskRepositoryStub.getAllTasks()).thenReturn(taskList);
         taskManager.createTask(taskStub);
@@ -58,7 +58,7 @@ class TaskManagerServiceTest {
     }
 
     @Test
-    public void Should_ReturnTaskAndCallHistoryAdd_When_GetTaskById() {
+    public void shouldReturnTaskAndCallHistoryAddWhenGetTaskById() {
         when(taskRepositoryStub.getTaskById(1)).thenReturn(taskStub);
 
         assertEquals(taskStub, taskManager.getTaskById(1));
@@ -66,7 +66,7 @@ class TaskManagerServiceTest {
     }
 
     @Test
-    public void Should_ThrowException_When_GetNonExistentTaskId() {
+    public void shouldThrowExceptionWhenGetNonExistentTaskId() {
         when(taskRepositoryStub.getTaskById(10)).thenThrow(NullPointerException.class);
         assertThrows(
                 NullPointerException.class,
@@ -76,25 +76,25 @@ class TaskManagerServiceTest {
     }
 
     @Test
-    public void Should_CallRepositoryMethodRemoveAllByTypeTask_When_RemoveAllTasks() {
+    public void shouldCallRepositoryMethodRemoveAllByTypeTaskWhenRemoveAllTasks() {
         taskManager.removeAllTasks();
         verify(taskRepositoryStub).removeAllByType(TaskType.TASK);
     }
 
     @Test
-    public void Should_CallRepositoryMethodUpdateTask_When_UpdateTask() {
+    public void shouldCallRepositoryMethodUpdateTaskWhenUpdateTask() {
         taskManager.updateTask(taskStub);
         verify(taskRepositoryStub).updateTask(taskStub);
     }
 
     @Test
-    public void Should_CallRepositoryMethodDeleteTaskById_When_DeleteTaskById() {
+    public void shouldCallRepositoryMethodDeleteTaskByIdWhenDeleteTaskById() {
         taskManager.deleteTaskById(taskStub.getId());
         verify(taskRepositoryStub).deleteTaskById(taskStub.getId());
     }
 
     @Test
-    public void Should_ThrowException_When_DeleteTaskByNonExistentId() {
+    public void shouldThrowExceptionWhenDeleteTaskByNonExistentId() {
         doThrow(NullPointerException.class)
                 .when(taskRepositoryStub)
                 .deleteTaskById(10);
@@ -106,13 +106,13 @@ class TaskManagerServiceTest {
 
     // Epics
     @Test
-    public void Should_ReturnEmptyListOfEpics_When_EpicsListIsEmpty() {
+    public void shouldReturnEmptyListOfEpicsWhenEpicsListIsEmpty() {
         assertEquals(0, taskManager.getAllEpics().size());
         assertNotNull(taskManager.getAllEpics());
     }
 
     @Test
-    public void Should_ReturnNotEmptyListOfEpics_When_CreateEpic() {
+    public void shouldReturnNotEmptyListOfEpicsWhenCreateEpic() {
         List<Epic> epicList = List.of(epicStub);
         when(taskRepositoryStub.getAllEpics()).thenReturn(epicList);
         taskManager.createEpic(epicStub);
@@ -121,14 +121,14 @@ class TaskManagerServiceTest {
     }
 
     @Test
-    public void Should_CallRepositoryMethodRemoveAllByTypeEpicSubtask_When_RemoveAllEpics() {
+    public void shouldCallRepositoryMethodRemoveAllByTypeEpicSubtaskWhenRemoveAllEpics() {
         taskManager.removeAllEpics();
         verify(taskRepositoryStub).removeAllByType(TaskType.EPIC);
         verify(taskRepositoryStub).removeAllByType(TaskType.SUB_TASK);
     }
 
     @Test
-    public void Should_ReturnEpicAndCallHistoryAdd_WhenGetEpicById() {
+    public void shouldReturnEpicAndCallHistoryAddWhenGetEpicById() {
         when(taskRepositoryStub.getEpicById(1)).thenReturn(epicStub);
 
         assertEquals(epicStub, taskManager.getEpicById(1));
@@ -136,7 +136,7 @@ class TaskManagerServiceTest {
     }
 
     @Test
-    public void Should_ThrowException_When_GetNonExistentEpicId() {
+    public void shouldThrowExceptionWhenGetNonExistentEpicId() {
         when(taskRepositoryStub.getEpicById(10)).thenThrow(NullPointerException.class);
         assertThrows(
                 NullPointerException.class,
@@ -146,21 +146,21 @@ class TaskManagerServiceTest {
     }
 
     @Test
-    public void Should_CallEpicSetIdAndRepositoryCreateEpic_When_CreateEpic() {
+    public void shouldCallEpicSetIdAndRepositoryCreateEpicWhenCreateEpic() {
         taskManager.createEpic(epicStub);
         verify(epicStub).setId(taskRepositoryStub.getNextId());
         verify(taskRepositoryStub).createEpic(epicStub);
     }
 
     @Test
-    public void Should_CallRepositoryMethodUpdateEpicAndEpicUpdateStatus_When_UpdateEpic() {
+    public void shouldCallRepositoryMethodUpdateEpicAndEpicUpdateStatusWhenUpdateEpic() {
         taskManager.updateEpic(epicStub);
         verify(taskRepositoryStub).updateEpic(epicStub);
         verify(epicStub).updateStatus();
     }
 
     @Test
-    public void Should_CallRepositoryMethodDeleteEpicByIdAndDeleteSubtasks_When_DeleteEpicById() {
+    public void shouldCallRepositoryMethodDeleteEpicByIdAndDeleteSubtasksWhenDeleteEpicById() {
         List<SubTask> subTaskList = List.of(subTask1Stub);
         when(epicStub.getSubTasks()).thenReturn(subTaskList);
         when(taskRepositoryStub.getEpicById(epicStub.getId())).thenReturn(epicStub);
@@ -171,7 +171,7 @@ class TaskManagerServiceTest {
     }
 
     @Test
-    public void Should_ThrowException_When_DeleteEpicByNonExistentId() {
+    public void shouldThrowExceptionWhenDeleteEpicByNonExistentId() {
         doThrow(NullPointerException.class)
                 .when(taskRepositoryStub)
                 .deleteEpicById(10);
@@ -183,13 +183,13 @@ class TaskManagerServiceTest {
 
     // Subtasks
     @Test
-    public void Should_ReturnEmptyListOfSubTasks_When_SubTasksListIsEmpty() {
+    public void shouldReturnEmptyListOfSubTasksWhenSubTasksListIsEmpty() {
         assertEquals(0, taskManager.getAllSubTasks().size());
         assertNotNull(taskManager.getAllSubTasks());
     }
 
     @Test
-    public void Should_ReturnNotEmptyListOfSubTasks_When_CreateSubTask() {
+    public void shouldReturnNotEmptyListOfSubTasksWhenCreateSubTask() {
         List<SubTask> subTaskList = List.of(subTask1Stub);
         when(taskRepositoryStub.getAllSubTasks()).thenReturn(subTaskList);
         when(subTask1Stub.getParent()).thenReturn(epicStub);
@@ -200,13 +200,13 @@ class TaskManagerServiceTest {
     }
 
     @Test
-    public void Should_CallRepositoryMethodRemoveAllByTypeSubTask_When_RemoveAllSubTasks() {
+    public void shouldCallRepositoryMethodRemoveAllByTypeSubTaskWhenRemoveAllSubTasks() {
         taskManager.removeAllSubTasks();
         verify(taskRepositoryStub).removeAllByType(TaskType.SUB_TASK);
     }
 
     @Test
-    public void Should_ClearEpicsSubtaskList_When_RemoveAllSubTasks() {
+    public void shouldClearEpicsSubtaskListWhenRemoveAllSubTasks() {
         List<SubTask> subTaskList = new ArrayList<>();
         subTaskList.add(subTask1Stub);
 
@@ -224,7 +224,7 @@ class TaskManagerServiceTest {
     }
 
     @Test
-    public void Should_ReturnSubtaskAndHistoryAdd_When_GetSubtaskById() {
+    public void shouldReturnSubtaskAndHistoryAddWhenGetSubtaskById() {
         when(taskRepositoryStub.getSubTaskById(1)).thenReturn(subTask1Stub);
 
         assertEquals(subTask1Stub, taskManager.getSubTaskById(1));
@@ -232,7 +232,7 @@ class TaskManagerServiceTest {
     }
 
     @Test
-    public void Should_ThrowException_When_GetNonExistentSubtaskId() {
+    public void shouldThrowExceptionWhenGetNonExistentSubtaskId() {
         when(taskRepositoryStub.getSubTaskById(10)).thenThrow(NullPointerException.class);
         assertThrows(
                 NullPointerException.class,
@@ -242,7 +242,7 @@ class TaskManagerServiceTest {
     }
 
     @Test
-    public void Should_ReturnNotNull_When_GetEpicOfSubtask() {
+    public void shouldReturnNotNullWhenGetEpicOfSubtask() {
         SubTask subTask = new SubTask("SubtaskName", "", epicStub);
         taskManager.createSubTask(subTask);
         assertEquals(epicStub, subTask.getParent());
@@ -250,7 +250,7 @@ class TaskManagerServiceTest {
     }
 
     @Test
-    public void Should_CallRepositoryMethodUpdateSubtaskAndParentEpicUpdateStatus_When_UpdateSubtask() {
+    public void shouldCallRepositoryMethodUpdateSubtaskAndParentEpicUpdateStatusWhenUpdateSubtask() {
         when(subTask1Stub.getParent()).thenReturn(epicStub);
         taskManager.updateSubTask(subTask1Stub);
         verify(taskRepositoryStub).updateSubTask(subTask1Stub);
@@ -259,7 +259,7 @@ class TaskManagerServiceTest {
     }
 
     @Test
-    public void Should_RemoveFromEpicAndCallRepositoryMethodDeleteSubtaskById_When_DeleteSubtaskById() {
+    public void shouldRemoveFromEpicAndCallRepositoryMethodDeleteSubtaskByIdWhenDeleteSubtaskById() {
         List<SubTask> subTaskListStub = mock(List.class);
         subTaskListStub.add(subTask1Stub);
         when(taskRepositoryStub.getSubTaskById(subTask1Stub.getId())).thenReturn(subTask1Stub);
@@ -275,7 +275,7 @@ class TaskManagerServiceTest {
     }
 
     @Test
-    public void Should_ReturnSubTaskList_When_GetAllSubTasksOfEpic() {
+    public void shouldReturnSubTaskListWhenGetAllSubTasksOfEpic() {
         List<SubTask> subTaskList = List.of(subTask1Stub, subTask2Stub);
         when(taskRepositoryStub.getAllSubTasksOfEpic(epicStub)).thenReturn(subTaskList);
 
@@ -284,7 +284,7 @@ class TaskManagerServiceTest {
 
     // Other
     @Test
-    public void Should_ReturnHistoryManager_When_GetHistoryManager() {
+    public void shouldReturnHistoryManagerWhenGetHistoryManager() {
         assertEquals(historyManagerStub, taskManager.getHistoryManager());
     }
 

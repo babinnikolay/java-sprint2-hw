@@ -10,8 +10,8 @@ import java.util.List;
 public class InMemoryTaskHistoryRepository implements TaskHistoryRepository{
     private final TaskHistoryRepositoryService service;
 
-    public InMemoryTaskHistoryRepository() {
-        service = new TaskHistoryRepositoryService(new TaskHistoryList(new HashMap()));
+    public InMemoryTaskHistoryRepository(TaskHistoryRepositoryService service) {
+        this.service = service;
     }
 
     @Override

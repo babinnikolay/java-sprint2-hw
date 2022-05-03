@@ -6,10 +6,10 @@ import tasks.*;
 import java.util.*;
 
 public class InMemoryTaskRepository implements TaskRepository{
-    private final TaskRepositoryService service;
+    private TaskRepositoryService service;
 
-    public InMemoryTaskRepository() {
-        this.service = new TaskRepositoryService();
+    public InMemoryTaskRepository(TaskRepositoryService service) {
+        this.service = service;
     }
 
     @Override

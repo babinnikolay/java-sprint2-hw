@@ -6,33 +6,25 @@ import tasks.*;
 import java.io.Serializable;
 import java.time.*;
 import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalAdjusters;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class TaskRepositoryService implements Serializable {
     private final Map<Integer, Task> tasks;
     private final Map<Integer, SubTask> subTasks;
     private final Map<Integer, Epic> epics;
     private int lastId = 1;
-    private Set<AbstractTask> prioritizedTasks;
-    private Map<Long, Boolean> planingPeriods = new HashMap<>();
+    private transient Set<AbstractTask> prioritizedTasks;
+    private final Map<Long, Boolean> planingPeriods;
     private static final int MINUTES_INTERVAL = 15;
 
     public TaskRepositoryService() {
         tasks = new HashMap<>();
         subTasks = new HashMap<>();
         epics = new HashMap<>();
-        prioritizedTasks = new TreeSet<>((t1, t2) -> {
-            if (t1.getStartTime().isAfter(t2.getStartTime())) {
-                return 1;
-            }
-            if (t1.getStartTime().isBefore(t2.getStartTime())) {
-                return -1;
-            }
-            return  0;
-        });
+        prioritizedTasks = new TreeSet<>(Comparator.comparing(AbstractTask::getStartTime));
+        planingPeriods = new HashMap<>();
         fillPlaningPeriods();
-
     }
 
     private void fillPlaningPeriods() {
@@ -53,24 +45,15 @@ public class TaskRepositoryService implements Serializable {
     }
 
     public List<Task> getAllTasks() {
-        return tasks.values()
-                .stream()
-                .map(Task.class::cast)
-                .collect(Collectors.toList());
+        return new ArrayList<>(tasks.values());
     }
 
     public List<Epic> getAllEpics() {
-        return epics.values()
-                .stream()
-                .map(Epic.class::cast)
-                .collect(Collectors.toList());
+        return new ArrayList<>(epics.values());
     }
 
     public List<SubTask> getAllSubTasks() {
-        return subTasks.values()
-                .stream()
-                .map(SubTask.class::cast)
-                .collect(Collectors.toList());
+        return new ArrayList<>(subTasks.values());
     }
 
     public void removeAllByType(TaskType type) {
@@ -101,7 +84,6 @@ public class TaskRepositoryService implements Serializable {
     }
 
     public Epic getEpicById(int id) {
-
         return epics.get(id);
     }
 
@@ -114,12 +96,13 @@ public class TaskRepositoryService implements Serializable {
             tasks.put(task.getId(), task);
             prioritizedTasks.add(task);
             addPeriodsTaskToPlaning(task);
+        } else {
+            throw new ManagerSaveException("Есть пересечения по времени с другими задачами");
         }
     }
 
     public void createEpic(Epic epic) {
         epics.put(epic.getId(), epic);
-        prioritizedTasks.add(epic);
     }
 
     public void createSubTask(SubTask subTask) {
@@ -133,7 +116,6 @@ public class TaskRepositoryService implements Serializable {
     public void updateTask(Task task) {
         if (taskNoTimeCrossing(task)) {
             tasks.put(task.getId(), task);
-            prioritizedTasks.add(task);
             removePeriodsTaskFromPlaning(task);
             addPeriodsTaskToPlaning(task);
         }
@@ -184,6 +166,16 @@ public class TaskRepositoryService implements Serializable {
         return prioritizedTasks;
     }
 
+    public void initPrioritizedTasks() {
+        prioritizedTasks = new TreeSet<>(Comparator.comparing(AbstractTask::getStartTime));
+        for (Task task : tasks.values()) {
+            prioritizedTasks.add(task);
+        }
+        for (SubTask subTask : subTasks.values()) {
+            prioritizedTasks.add(subTask);
+        }
+    }
+
     private boolean taskNoTimeCrossing(AbstractTask taskToCheck) {
 
         List<Long> timeKeys = getTimeKeysFromTask(taskToCheck);
@@ -198,18 +190,18 @@ public class TaskRepositoryService implements Serializable {
     private List<Long> getTimeKeysFromTask(AbstractTask taskToCheck) {
 
         List<Long> timeKeys = new ArrayList<>();
-        taskToCheck.getStartTime().toEpochSecond(ZoneOffset.UTC);
-        long totalMinutes = ChronoUnit.MINUTES.between(taskToCheck.getStartTime(),
+        long totalTaskMinutes = ChronoUnit.MINUTES.between(taskToCheck.getStartTime(),
                 taskToCheck.getEndTime());
-        long intervalCount = (totalMinutes / MINUTES_INTERVAL)
-                + ((totalMinutes % MINUTES_INTERVAL) > 0 ? 1 : 0);
+
+        long intervalsCount = (totalTaskMinutes / MINUTES_INTERVAL)
+                + ((totalTaskMinutes % MINUTES_INTERVAL) > 0 ? 1 : 0);
 
         long startTime = taskToCheck.getStartTime().toEpochSecond(ZoneOffset.UTC);
-        long yearStart = LocalDateTime.of(
-                LocalDateTime.now().getYear(), 1, 1, 1, 1, 1)
+        long yearStart =  LocalDateTime
+                .of(LocalDateTime.now().getYear(), 1, 1, 1, 1, 1)
                 .toEpochSecond(ZoneOffset.UTC);
 
-        for (long i = 0; i < intervalCount; i++) {
+        for (long i = 0; i < intervalsCount; i++) {
             long differenceInMinutes = ((startTime - yearStart) / 60) + (i * MINUTES_INTERVAL);
             long interval = differenceInMinutes / MINUTES_INTERVAL;
 

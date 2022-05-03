@@ -1,34 +1,22 @@
 package repositories;
 
-import exceptions.ManagerSaveException;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import tasks.SubTask;
+import repositories.domain.TaskHistoryList;
+import repositories.services.TaskHistoryRepositoryService;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.HashMap;
 
-class FileBackedTaskHistoryRepositoryTest {
+public class FileBackedTaskHistoryRepositoryTest {
 
-    FileBackedTaskHistoryRepository taskHistoryRepository;
-
-    @Mock
-    SubTask subTaskStub;
+    private FileBackedTaskHistoryRepository taskHistoryRepository;
 
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        taskHistoryRepository = new FileBackedTaskHistoryRepository();
-    }
-
-    @Test
-    public void Should_Save_When_SaveEmptyServiceList() {
-        assertThrows(
-                ManagerSaveException.class,
-                () -> taskHistoryRepository.save(),
-                "non-existent id"
-        );
+        TaskHistoryList taskHistory = new TaskHistoryList(new HashMap<>());
+        TaskHistoryRepositoryService service = new TaskHistoryRepositoryService(taskHistory);
+        taskHistoryRepository = new FileBackedTaskHistoryRepository(service);
     }
 
 }

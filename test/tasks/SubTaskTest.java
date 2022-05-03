@@ -8,12 +8,12 @@ import org.mockito.MockitoAnnotations;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-class SubTaskTest {
+public class SubTaskTest {
 
     @Mock
-    Epic epicStub;
+    private Epic epicStub;
 
-    SubTask subTask;
+    private SubTask subTask;
 
     @BeforeEach
     public void setUp() {
@@ -22,13 +22,13 @@ class SubTaskTest {
     }
 
     @Test
-    public void Should_ReturnEpic_When_GetParent() {
+    public void shouldReturnEpicWhenGetParent() {
         assertEquals(epicStub, subTask.getParent());
         assertNotNull(subTask.getParent());
     }
 
     @Test
-    public void Should_HaveStatusDone_When_SetStatusDone() {
+    public void shouldHaveStatusDoneWhenSetStatusDone() {
         when(epicStub.getStatus()).thenReturn(TaskStatus.DONE);
 
         subTask.setStatus(TaskStatus.DONE);
@@ -37,7 +37,7 @@ class SubTaskTest {
     }
 
     @Test
-    public void Should_ContainsSubStringSubTask_When_ToString() {
+    public void shouldContainsSubStringSubTaskWhenToString() {
         assertTrue(subTask.toString().contains("SubTask"));
     }
 

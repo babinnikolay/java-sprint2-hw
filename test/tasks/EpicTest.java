@@ -11,15 +11,15 @@ import java.time.LocalDateTime;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-class EpicTest {
+public class EpicTest {
 
-    Epic epic;
-
-    @Mock
-    SubTask subTask1Stub;
+    private Epic epic;
 
     @Mock
-    SubTask subTask2Stub;
+    private SubTask subTask1Stub;
+
+    @Mock
+    private SubTask subTask2Stub;
 
     @BeforeEach
     public void setUp() {
@@ -28,13 +28,15 @@ class EpicTest {
     }
 
     @Test
-    public void Should_ReturnListOfSubTask_When_GetSubTasks() {
+    public void shouldReturnListOfSubTaskWhenGetSubTasks() {
         when(subTask1Stub.getStatus()).thenReturn(TaskStatus.NEW);
         when(subTask2Stub.getStatus()).thenReturn(TaskStatus.NEW);
         when(subTask1Stub.getStartTime()).thenReturn(LocalDateTime.MIN);
         when(subTask2Stub.getStartTime()).thenReturn(LocalDateTime.MIN);
         when(subTask1Stub.getEndTime()).thenReturn(LocalDateTime.MIN);
         when(subTask2Stub.getEndTime()).thenReturn(LocalDateTime.MIN);
+        when(subTask1Stub.getDuration()).thenReturn(Duration.ZERO);
+        when(subTask2Stub.getDuration()).thenReturn(Duration.ZERO);
 
         epic.addSubTask(subTask1Stub);
         epic.addSubTask(subTask2Stub);
@@ -43,13 +45,15 @@ class EpicTest {
     }
 
     @Test
-    public void Should_ReturnStatusNew_When_EpicHaveAllNewSubtasks() {
+    public void shouldReturnStatusNewWhenEpicHaveAllNewSubtasks() {
         when(subTask1Stub.getStatus()).thenReturn(TaskStatus.NEW);
         when(subTask2Stub.getStatus()).thenReturn(TaskStatus.NEW);
         when(subTask1Stub.getStartTime()).thenReturn(LocalDateTime.MIN);
         when(subTask2Stub.getStartTime()).thenReturn(LocalDateTime.MIN);
         when(subTask1Stub.getEndTime()).thenReturn(LocalDateTime.MIN);
         when(subTask2Stub.getEndTime()).thenReturn(LocalDateTime.MIN);
+        when(subTask1Stub.getDuration()).thenReturn(Duration.ZERO);
+        when(subTask2Stub.getDuration()).thenReturn(Duration.ZERO);
 
         epic.addSubTask(subTask1Stub);
         epic.addSubTask(subTask2Stub);
@@ -57,13 +61,15 @@ class EpicTest {
     }
 
     @Test
-    public void Should_ReturnStatusDone_When_EpicHaveAllDoneSubtasks() {
+    public void shouldReturnStatusDoneWhenEpicHaveAllDoneSubtasks() {
         when(subTask1Stub.getStatus()).thenReturn(TaskStatus.DONE);
         when(subTask2Stub.getStatus()).thenReturn(TaskStatus.DONE);
         when(subTask1Stub.getStartTime()).thenReturn(LocalDateTime.MIN);
         when(subTask2Stub.getStartTime()).thenReturn(LocalDateTime.MIN);
         when(subTask1Stub.getEndTime()).thenReturn(LocalDateTime.MIN);
         when(subTask2Stub.getEndTime()).thenReturn(LocalDateTime.MIN);
+        when(subTask1Stub.getDuration()).thenReturn(Duration.ZERO);
+        when(subTask2Stub.getDuration()).thenReturn(Duration.ZERO);
 
         epic.addSubTask(subTask1Stub);
         epic.addSubTask(subTask2Stub);
@@ -71,13 +77,15 @@ class EpicTest {
     }
 
     @Test
-    public void Should_ReturnStatusOnProgress_When_EpicHaveDifferentStatusSubtasks() {
+    public void shouldReturnStatusOnProgressWhenEpicHaveDifferentStatusSubtasks() {
         when(subTask1Stub.getStatus()).thenReturn(TaskStatus.NEW);
         when(subTask2Stub.getStatus()).thenReturn(TaskStatus.DONE);
         when(subTask1Stub.getStartTime()).thenReturn(LocalDateTime.MIN);
         when(subTask2Stub.getStartTime()).thenReturn(LocalDateTime.MIN);
         when(subTask1Stub.getEndTime()).thenReturn(LocalDateTime.MIN);
         when(subTask2Stub.getEndTime()).thenReturn(LocalDateTime.MIN);
+        when(subTask1Stub.getDuration()).thenReturn(Duration.ZERO);
+        when(subTask2Stub.getDuration()).thenReturn(Duration.ZERO);
 
         epic.addSubTask(subTask1Stub);
         epic.addSubTask(subTask2Stub);
@@ -85,13 +93,15 @@ class EpicTest {
     }
 
     @Test
-    public void Should_ReturnStatusOnProgress_When_EpicHaveInProgressSubtasks() {
+    public void shouldReturnStatusOnProgressWhenEpicHaveIN_PROGRESSSubtasks() {
         when(subTask1Stub.getStatus()).thenReturn(TaskStatus.IN_PROGRESS);
         when(subTask2Stub.getStatus()).thenReturn(TaskStatus.IN_PROGRESS);
         when(subTask1Stub.getStartTime()).thenReturn(LocalDateTime.MIN);
         when(subTask2Stub.getStartTime()).thenReturn(LocalDateTime.MIN);
         when(subTask1Stub.getEndTime()).thenReturn(LocalDateTime.MIN);
         when(subTask2Stub.getEndTime()).thenReturn(LocalDateTime.MIN);
+        when(subTask1Stub.getDuration()).thenReturn(Duration.ZERO);
+        when(subTask2Stub.getDuration()).thenReturn(Duration.ZERO);
 
         epic.addSubTask(subTask1Stub);
         epic.addSubTask(subTask2Stub);
@@ -99,15 +109,17 @@ class EpicTest {
     }
 
     @Test
-    public void Should_ReturnStatusNew_When_EpicDoesntHaveSubtasks() {
+    public void shouldReturnStatusNewWhenEpicDoesntHaveSubtasks() {
         epic.updateStatus();
         assertEquals(TaskStatus.NEW, epic.getStatus());
     }
 
     @Test
-    public void Should_ReturnMinAndMaxSubtasksTime_When_AddSubTasks() {
+    public void shouldReturnMinAndMaxSubtasksTimeWhenAddSubTasks() {
         when(subTask1Stub.getStatus()).thenReturn(TaskStatus.IN_PROGRESS);
         when(subTask2Stub.getStatus()).thenReturn(TaskStatus.IN_PROGRESS);
+        when(subTask1Stub.getDuration()).thenReturn(Duration.ZERO);
+        when(subTask2Stub.getDuration()).thenReturn(Duration.ZERO);
 
         when(subTask1Stub.getStartTime()).thenReturn(
                 LocalDateTime.of(2022, 1, 1, 1, 1, 1));
@@ -127,9 +139,11 @@ class EpicTest {
     }
 
     @Test
-    public void Should_ReturnMinAndMaxSubtask2Time_When_AddSubTasks() {
+    public void shouldReturnMinAndMaxSubtask2TimeWhenAddSubTasks() {
         when(subTask1Stub.getStatus()).thenReturn(TaskStatus.IN_PROGRESS);
         when(subTask2Stub.getStatus()).thenReturn(TaskStatus.IN_PROGRESS);
+        when(subTask1Stub.getDuration()).thenReturn(Duration.ZERO);
+        when(subTask2Stub.getDuration()).thenReturn(Duration.ZERO);
 
         when(subTask1Stub.getStartTime()).thenReturn(
                 LocalDateTime.of(2022, 1, 1, 1, 1, 2));
@@ -149,7 +163,7 @@ class EpicTest {
     }
 
     @Test
-    public void Should_ReturnNull_When_EpicDoesNotHaveSubtasksGetStartEndTime() {
+    public void shouldReturnNullWhenEpicDoesNotHaveSubtasksGetStartEndTime() {
         epic.updateTimeFields();
 
         assertNull(epic.getStartTime());

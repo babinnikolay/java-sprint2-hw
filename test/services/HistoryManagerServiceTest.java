@@ -12,13 +12,13 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-class HistoryManagerServiceTest {
+public class HistoryManagerServiceTest {
 
     @Mock
-    TaskHistoryRepository historyRepositoryStub;
+    private TaskHistoryRepository historyRepositoryStub;
 
     @Mock
-    AbstractTask abstractTaskStub;
+    private AbstractTask abstractTaskStub;
 
     HistoryManagerService historyManager;
 
@@ -29,19 +29,19 @@ class HistoryManagerServiceTest {
     }
 
     @Test
-    public void Should_CallHistoryRepositoryMethodAdd_When_Add() {
+    public void shouldCallHistoryRepositoryMethodAddWhenAdd() {
         historyManager.add(abstractTaskStub);
         verify(historyRepositoryStub).add(abstractTaskStub);
     }
 
     @Test
-    public void Should_CallHistoryRepositoryMethodRemove_When_Remove() {
+    public void shouldCallHistoryRepositoryMethodRemoveWhenRemove() {
         historyManager.remove(1);
         verify(historyRepositoryStub).remove(1);
     }
 
     @Test
-    public void Return_ListOfAbstractTask_When_GetHistory() {
+    public void shouldReturnListOfAbstractTaskWhenGetHistory() {
         List<AbstractTask> listOfTask = List.of(abstractTaskStub);
         when(historyRepositoryStub.history()).thenReturn(listOfTask);
 
