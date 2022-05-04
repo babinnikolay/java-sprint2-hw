@@ -96,7 +96,6 @@ abstract class AbstractTaskRepositoryTest<T extends TaskRepository> {
         verify(serviceStub).updateSubTask(subTaskStub);
     }
 
-
     @Test
     public void shouldCallMethodDeleteTaskByIdWhenDeleteTaskById() {
         taskRepository.deleteTaskById(1);
@@ -121,5 +120,22 @@ abstract class AbstractTaskRepositoryTest<T extends TaskRepository> {
         verify(serviceStub).getAllSubTasksOfEpic(epicStub);
     }
 
+    @Test
+    public void shouldCallMethodGetTaskByIdWhenGetTaskById() {
+        taskRepository.getTaskById(1);
+        verify(serviceStub).getTaskById(1);
+    }
+
+    @Test
+    public void shouldCallMethodGetSubTaskByIdWhenGetSubTaskById() {
+        taskRepository.getSubTaskById(1);
+        verify(serviceStub).getSubTaskById(1);
+    }
+
+    @Test
+    public void shouldCallMethodGetEpicByIdWhenGetEpicById() {
+        taskRepository.getEpicById(1);
+        verify(serviceStub).getEpicById(1);
+    }
 
 }

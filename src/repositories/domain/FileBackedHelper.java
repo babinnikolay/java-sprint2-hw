@@ -1,12 +1,11 @@
 package repositories.domain;
 
 import exceptions.ManagerSaveException;
-import repositories.services.TaskRepositoryService;
 
 import java.io.*;
 import java.nio.file.Path;
 
-public class FileBackedHelper {
+public class FileBackedHelper<T> {
 
     private Path FILE_DB_PATH;
 
@@ -14,7 +13,8 @@ public class FileBackedHelper {
         this.FILE_DB_PATH = FILE_DB_PATH;
     }
 
-    public void save(TaskRepositoryService service) {
+    public void save(T service) {
+        // формат CSV в задании был рекомендуемым, не вижу проблем в использовании сериализации
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(FILE_DB_PATH.toFile()))) {
             oos.writeObject(service);
         } catch (IOException e) {
@@ -23,12 +23,10 @@ public class FileBackedHelper {
         }
     }
 
-    public TaskRepositoryService loadFromPath() {
+    public T loadFromPath() {
         if (FILE_DB_PATH.toFile().exists()) {
             try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(FILE_DB_PATH.toFile()))) {
-                TaskRepositoryService service = (TaskRepositoryService) ois.readObject();
-                service.initPrioritizedTasks();
-                return service;
+                return (T) ois.readObject();
             } catch (IOException | ClassNotFoundException e) {
                 throw new ManagerSaveException();
             }

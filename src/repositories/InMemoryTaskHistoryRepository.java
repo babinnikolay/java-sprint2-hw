@@ -1,10 +1,8 @@
 package repositories;
 
-import repositories.domain.TaskHistoryList;
 import repositories.services.TaskHistoryRepositoryService;
 import tasks.AbstractTask;
 
-import java.util.HashMap;
 import java.util.List;
 
 public class InMemoryTaskHistoryRepository implements TaskHistoryRepository{

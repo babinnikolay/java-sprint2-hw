@@ -9,9 +9,10 @@ import java.util.Set;
 
 public class FileBackedTaskRepository implements TaskRepository{
     private TaskRepositoryService service;
-    private FileBackedHelper fileBackedHelper;
+    private FileBackedHelper<TaskRepositoryService> fileBackedHelper;
 
-    public FileBackedTaskRepository(TaskRepositoryService service, FileBackedHelper fileBackedHelper) {
+    public FileBackedTaskRepository(TaskRepositoryService service,
+                                    FileBackedHelper<TaskRepositoryService> fileBackedHelper) {
         this.service = service;
         this.fileBackedHelper = fileBackedHelper;
     }
@@ -125,5 +126,6 @@ public class FileBackedTaskRepository implements TaskRepository{
 
     public void loadFromPath() {
         service = fileBackedHelper.loadFromPath();
+        service.initPrioritizedTasks();
     }
 }

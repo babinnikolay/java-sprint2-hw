@@ -6,7 +6,6 @@ import tasks.*;
 import java.io.Serializable;
 import java.time.*;
 import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalAdjusters;
 import java.util.*;
 
 public class TaskRepositoryService implements Serializable {
@@ -116,6 +115,7 @@ public class TaskRepositoryService implements Serializable {
     public void updateTask(Task task) {
         if (taskNoTimeCrossing(task)) {
             tasks.put(task.getId(), task);
+            prioritizedTasks.add(task);
             removePeriodsTaskFromPlaning(task);
             addPeriodsTaskToPlaning(task);
         }
@@ -132,7 +132,6 @@ public class TaskRepositoryService implements Serializable {
 
     public void updateEpic(Epic epic) {
         epics.put(epic.getId(), epic);
-        prioritizedTasks.add(epic);
     }
 
     public void deleteTaskById(int id) {
@@ -153,7 +152,7 @@ public class TaskRepositoryService implements Serializable {
 
     public void deleteEpicById(int id) {
         if (epics.containsKey(id)) {
-            prioritizedTasks.remove(epics.get(id));
+            epics.get(id).getSubTasks().clear();
             epics.remove(id);
         }
     }
@@ -167,6 +166,7 @@ public class TaskRepositoryService implements Serializable {
     }
 
     public void initPrioritizedTasks() {
+        // после восстановления это поле будет null, так как помечено как transient
         prioritizedTasks = new TreeSet<>(Comparator.comparing(AbstractTask::getStartTime));
         for (Task task : tasks.values()) {
             prioritizedTasks.add(task);

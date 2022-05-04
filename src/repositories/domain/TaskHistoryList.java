@@ -45,11 +45,15 @@ public class TaskHistoryList implements Serializable {
             next.setPrev(prev);
         }
         if (prev == null) {
-            next.setPrev(null);
+            if (next != null) {
+                next.setPrev(null);
+            }
             head = next;
         }
         if (next == null) {
-            prev.setNext(null);
+            if (prev != null) {
+                prev.setNext(null);
+            }
             last = prev;
         }
         nodes.remove(id);

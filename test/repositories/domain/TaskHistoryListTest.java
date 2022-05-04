@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import tasks.AbstractTask;
+import tasks.Task;
 
 import java.util.HashMap;
 import java.util.NoSuchElementException;
@@ -49,6 +50,25 @@ public class TaskHistoryListTest {
                 () -> taskHistoryList.remove(10),
                 "non-existent id"
         );
+    }
+
+    @Test
+    public void shouldNotAddAbstractTaskWhenTaskHistoryHaveDuplicate() {
+
+        taskHistoryList = new TaskHistoryList(new HashMap<>());
+        Task task1 = new Task("t1", "d");
+        task1.setId(1);
+        Task task2 = new Task("t2", "d");
+        task2.setId(2);
+
+        taskHistoryList.linkLast(task1);
+        taskHistoryList.linkLast(task2);
+        taskHistoryList.linkLast(task1);
+        taskHistoryList.linkLast(task2);
+        taskHistoryList.linkLast(task2);
+        taskHistoryList.linkLast(task2);
+
+        assertEquals(2, taskHistoryList.getHistory().size());
     }
 
     @Test

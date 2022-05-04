@@ -141,7 +141,7 @@ public class FileBackedTaskRepositoryTest extends AbstractTaskRepositoryTest<Fil
 
     @Test
     public void shouldSaveToFileAndRestoreTasksWhenCreateTask() {
-        Path filePath = Paths.get("resources", "fileTaskDB.ser");
+        Path filePath = Paths.get("fileTaskDB.ser");
 
         FileBackedHelper fileBackedHelper
                 = new FileBackedHelper(filePath);

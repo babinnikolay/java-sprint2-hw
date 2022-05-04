@@ -1,23 +1,19 @@
 package repositories;
 
-import exceptions.ManagerSaveException;
-import repositories.domain.TaskHistoryList;
+import repositories.domain.FileBackedHelper;
 import repositories.services.TaskHistoryRepositoryService;
 import tasks.AbstractTask;
 
-import java.io.*;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.HashMap;
 import java.util.List;
 
 public class FileBackedTaskHistoryRepository implements TaskHistoryRepository{
     private TaskHistoryRepositoryService service;
+    private FileBackedHelper<TaskHistoryRepositoryService> fileBackedHelper;
 
-    public static final Path FILE_DB_PATH = Paths.get( "resources","fileHistoryTaskDB.ser");
-
-    public FileBackedTaskHistoryRepository(TaskHistoryRepositoryService service) {
+    public FileBackedTaskHistoryRepository(TaskHistoryRepositoryService service,
+                                           FileBackedHelper<TaskHistoryRepositoryService> fileBackedHelper) {
         this.service = service;
+        this.fileBackedHelper = fileBackedHelper;
     }
 
     @Override
@@ -38,21 +34,11 @@ public class FileBackedTaskHistoryRepository implements TaskHistoryRepository{
     }
 
     public void save() {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(FILE_DB_PATH.toFile()))) {
-            oos.writeObject(service);
-        } catch (IOException e) {
-            throw new ManagerSaveException();
-        }
+        fileBackedHelper.save(service);
     }
 
     public void loadFromPath() {
-        if (FILE_DB_PATH.toFile().exists()) {
-            try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(FILE_DB_PATH.toFile()))) {
-                service = (TaskHistoryRepositoryService) ois.readObject();
-            } catch (IOException | ClassNotFoundException e) {
-                throw new ManagerSaveException();
-            }
-        }
+        service = fileBackedHelper.loadFromPath();
     }
 
 }
