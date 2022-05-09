@@ -2,18 +2,16 @@ package repositories;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import repositories.domain.TaskHistoryList;
 import repositories.services.TaskHistoryRepositoryService;
 import tasks.AbstractTask;
 import tasks.Task;
 
-import java.util.HashMap;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-public abstract class AbstractTaskHistoryRepositoryTest<T extends TaskHistoryRepository> {
+public abstract class AbstractTaskHistoryRepositoryTest<T extends AbstractTaskHistoryRepository> {
 
     protected T taskHistoryRepository;
 

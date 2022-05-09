@@ -4,7 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import repositories.TaskHistoryRepository;
+import repositories.AbstractTaskHistoryRepository;
 import tasks.AbstractTask;
 
 import java.util.List;
@@ -15,7 +15,7 @@ import static org.mockito.Mockito.*;
 public class HistoryManagerServiceTest {
 
     @Mock
-    private TaskHistoryRepository historyRepositoryStub;
+    private AbstractTaskHistoryRepository historyRepositoryStub;
 
     @Mock
     private AbstractTask abstractTaskStub;

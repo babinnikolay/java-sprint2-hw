@@ -8,7 +8,7 @@ import services.kv.KVTaskClient;
 public class HTTPTaskRepository extends FileBackedTaskRepository{
     private KVTaskClient client;
     private Gson gson = new Gson();
-    private static final String SERVICE_KEY = "service";
+    private static final String KV_KEY = "service";
 
     public HTTPTaskRepository(TaskRepositoryService service, KVTaskClient client) {
         super(service, null);
@@ -17,12 +17,12 @@ public class HTTPTaskRepository extends FileBackedTaskRepository{
 
     @Override
     protected void save() {
-        client.put(SERVICE_KEY, gson.toJson(service));
+        client.put(KV_KEY, gson.toJson(service));
     }
 
     @Override
     public void loadFromPath() {
-        String jsonService = client.load(SERVICE_KEY);
+        String jsonService = client.load(KV_KEY);
         service = gson.fromJson(jsonService, TaskRepositoryService.class);
         service.initPrioritizedTasks();
     }

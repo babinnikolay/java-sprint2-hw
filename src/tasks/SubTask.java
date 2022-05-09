@@ -6,6 +6,7 @@ public class SubTask extends AbstractTask{
     public SubTask(String name, String description, Epic parent) {
         super(name, description, TaskStatus.NEW);
         this.parent = parent;
+        type = TaskType.SUB_TASK;
     }
 
     public void setParent(Epic parent) {

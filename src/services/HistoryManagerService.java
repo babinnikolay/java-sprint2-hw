@@ -1,15 +1,15 @@
 package services;
 
-import repositories.TaskHistoryRepository;
+import repositories.AbstractTaskHistoryRepository;
 import tasks.AbstractTask;
 
 import java.util.List;
 
 public class HistoryManagerService implements HistoryManager {
 
-    private final TaskHistoryRepository historyRepository;
+    private final AbstractTaskHistoryRepository historyRepository;
 
-    public HistoryManagerService(TaskHistoryRepository historyRepository) {
+    public HistoryManagerService(AbstractTaskHistoryRepository historyRepository) {
         this.historyRepository = historyRepository;
     }
 

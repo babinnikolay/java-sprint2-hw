@@ -12,6 +12,16 @@ public abstract class AbstractTask implements Serializable {
     private TaskStatus status;
     private Duration duration;
     private LocalDateTime startTime;
+    protected TaskType type;
+
+
+    public TaskType getType() {
+        return type;
+    }
+
+    public void setType(TaskType type) {
+        this.type = type;
+    }
 
     protected AbstractTask(String name, String description, TaskStatus status) {
         this.name = name;

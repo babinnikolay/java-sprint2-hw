@@ -6,34 +6,33 @@ import tasks.AbstractTask;
 
 import java.util.List;
 
-public class FileBackedTaskHistoryRepository implements TaskHistoryRepository{
-    private TaskHistoryRepositoryService service;
+public class FileBackedTaskHistoryRepository extends AbstractTaskHistoryRepository {
     private FileBackedHelper<TaskHistoryRepositoryService> fileBackedHelper;
 
     public FileBackedTaskHistoryRepository(TaskHistoryRepositoryService service,
                                            FileBackedHelper<TaskHistoryRepositoryService> fileBackedHelper) {
-        this.service = service;
+        super(service);
         this.fileBackedHelper = fileBackedHelper;
     }
 
     @Override
     public void add(AbstractTask task) {
-        service.add(task);
+        super.add(task);
         save();
     }
 
     @Override
     public void remove(int id) {
-        service.remove(id);
+        super.remove(id);
         save();
     }
 
     @Override
     public List<AbstractTask> history() {
-        return service.history();
+        return super.history();
     }
 
-    public void save() {
+    protected void save() {
         fileBackedHelper.save(service);
     }
 
