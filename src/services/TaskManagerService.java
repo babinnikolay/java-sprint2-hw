@@ -1,16 +1,16 @@
 package services;
 
-import repositories.TaskRepository;
+import repositories.AbstractTaskRepository;
 import tasks.*;
 
 import java.util.List;
 import java.util.Set;
 
 public class TaskManagerService implements TaskManager {
-    private final TaskRepository repository;
+    private final AbstractTaskRepository repository;
     private final HistoryManager history;
 
-    public TaskManagerService(TaskRepository taskRepository, HistoryManager history) {
+    public TaskManagerService(AbstractTaskRepository taskRepository, HistoryManager history) {
         this.repository = taskRepository;
         this.history = history;
     }

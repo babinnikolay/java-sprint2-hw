@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-abstract class AbstractTaskRepositoryTest<T extends TaskRepository> {
+abstract class AbstractTaskRepositoryTest<T extends AbstractTaskRepository> {
 
     protected T taskRepository;
 
