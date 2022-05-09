@@ -55,10 +55,13 @@ public class HttpTaskServer {
             TasksRootHandler tasksRootHandler = new TasksRootHandler(taskManagerService, gson);
             httpServer.createContext("/tasks/", tasksRootHandler);
             httpServer.createContext("/tasks", tasksRootHandler);
-
-            httpServer.start();
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void start() {
+        System.out.printf("server started at %n", PORT);
+        httpServer.start();
     }
 }
