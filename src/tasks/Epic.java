@@ -29,15 +29,15 @@ public class Epic extends AbstractTask {
         return endTime;
     }
 
-    private void setEndTime(LocalDateTime endTime) {
+    public void setEndTime(LocalDateTime endTime) {
         this.endTime = endTime;
     }
 
     public void updateTimeFields() {
         if (subTasks.isEmpty()) {
             setDuration(Duration.ZERO);
-            setStartTime(null);
-            setEndTime(null);
+            setStartTime(LocalDateTime.MIN);
+            setEndTime(LocalDateTime.MIN);
             return;
         }
         Duration totalDuration = Duration.ZERO;

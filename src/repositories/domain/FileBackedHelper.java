@@ -14,7 +14,6 @@ public class FileBackedHelper<T> {
     }
 
     public void save(T service) {
-        // формат CSV в задании был рекомендуемым, не вижу проблем в использовании сериализации
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(FILE_DB_PATH.toFile()))) {
             oos.writeObject(service);
         } catch (IOException e) {
@@ -28,11 +27,14 @@ public class FileBackedHelper<T> {
             try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(FILE_DB_PATH.toFile()))) {
                 return (T) ois.readObject();
             } catch (IOException | ClassNotFoundException e) {
+                e.printStackTrace();
                 throw new ManagerSaveException();
             }
-        } else {
-            throw new ManagerSaveException();
         }
+        return null;
     }
 
+    public boolean isFileExists() {
+        return FILE_DB_PATH.toFile().exists();
+    }
 }

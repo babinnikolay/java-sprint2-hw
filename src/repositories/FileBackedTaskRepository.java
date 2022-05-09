@@ -120,7 +120,7 @@ public class FileBackedTaskRepository implements TaskRepository{
         return service.getAllSubTasksOfEpic(epic);
     }
 
-    public void save() {
+    private void save() {
         fileBackedHelper.save(service);
     }
 

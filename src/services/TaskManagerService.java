@@ -96,8 +96,8 @@ public class TaskManagerService implements TaskManager {
     @Override
     public void createSubTask(SubTask subTask) {
         subTask.setId(repository.getNextId());
-        repository.createSubTask(subTask);
         subTask.getParent().addSubTask(subTask);
+        repository.createSubTask(subTask);
     }
 
     @Override

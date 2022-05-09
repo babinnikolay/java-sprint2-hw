@@ -113,20 +113,19 @@ public class TaskRepositoryService implements Serializable {
     }
 
     public void updateTask(Task task) {
-        if (taskNoTimeCrossing(task)) {
+        if (tasks.containsKey(task.getId())) {
             tasks.put(task.getId(), task);
             prioritizedTasks.add(task);
-            removePeriodsTaskFromPlaning(task);
-            addPeriodsTaskToPlaning(task);
         }
     }
 
     public void updateSubTask(SubTask subTask) {
-        if (taskNoTimeCrossing(subTask)) {
+        if (subTasks.containsKey(subTask.getId())) {
             subTasks.put(subTask.getId(), subTask);
             prioritizedTasks.add(subTask);
-            removePeriodsTaskFromPlaning(subTask);
-            addPeriodsTaskToPlaning(subTask);
+            Epic parent = subTask.getParent();
+            parent.getSubTasks().removeIf(task -> task.getId() == subTask.getId());
+            parent.addSubTask(subTask);
         }
     }
 

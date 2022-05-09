@@ -3,6 +3,7 @@ package tasks;
 import java.io.Serializable;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public abstract class AbstractTask implements Serializable {
     private String name;
@@ -28,6 +29,10 @@ public abstract class AbstractTask implements Serializable {
 
     public String getDescription() {
         return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getName() {
@@ -74,5 +79,18 @@ public abstract class AbstractTask implements Serializable {
                 ", id=" + id +
                 ", status=" + status +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        AbstractTask that = (AbstractTask) o;
+        return getId() == that.getId();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
     }
 }

@@ -1,10 +1,14 @@
 package tasks;
 
 public class SubTask extends AbstractTask{
-    private final Epic parent;
+    private Epic parent;
 
     public SubTask(String name, String description, Epic parent) {
         super(name, description, TaskStatus.NEW);
+        this.parent = parent;
+    }
+
+    public void setParent(Epic parent) {
         this.parent = parent;
     }
 

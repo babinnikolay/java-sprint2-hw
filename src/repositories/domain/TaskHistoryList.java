@@ -34,29 +34,28 @@ public class TaskHistoryList implements Serializable {
     }
 
     public void remove(int id) {
-        if (!nodes.containsKey(id)) {
-            throw new NoSuchElementException();
-        }
-        Node node = nodes.get(id);
-        Node prev = node.getPrev();
-        Node next = node.getNext();
-        if (prev != null && next != null) {
-            prev.setNext(next);
-            next.setPrev(prev);
-        }
-        if (prev == null) {
-            if (next != null) {
-                next.setPrev(null);
+        if (nodes.containsKey(id)) {
+            Node node = nodes.get(id);
+            Node prev = node.getPrev();
+            Node next = node.getNext();
+            if (prev != null && next != null) {
+                prev.setNext(next);
+                next.setPrev(prev);
             }
-            head = next;
-        }
-        if (next == null) {
-            if (prev != null) {
-                prev.setNext(null);
+            if (prev == null) {
+                if (next != null) {
+                    next.setPrev(null);
+                }
+                head = next;
             }
-            last = prev;
+            if (next == null) {
+                if (prev != null) {
+                    prev.setNext(null);
+                }
+                last = prev;
+            }
+            nodes.remove(id);
         }
-        nodes.remove(id);
     }
 
     public List<AbstractTask> getHistory() {
