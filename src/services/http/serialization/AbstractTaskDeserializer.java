@@ -42,11 +42,13 @@ public class AbstractTaskDeserializer implements JsonDeserializer<AbstractTask> 
                 newTask = null;
         }
 
-        newTask.setId(id);
-        newTask.setDuration(duration);
-        newTask.setStartTime(startTime);
-        newTask.setStatus(status);
-        newTask.setType(taskType);
+        if (newTask != null) {
+            newTask.setId(id);
+            newTask.setDuration(duration);
+            newTask.setStartTime(startTime);
+            newTask.setStatus(status);
+            newTask.setType(taskType);
+        }
 
         return newTask;
     }

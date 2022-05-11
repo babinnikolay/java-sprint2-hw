@@ -9,8 +9,6 @@ import repositories.domain.TaskHistoryList;
 import repositories.services.TaskHistoryRepositoryService;
 import services.kv.KVServer;
 import services.kv.KVTaskClient;
-import tasks.Epic;
-import tasks.SubTask;
 import tasks.Task;
 
 import java.io.IOException;
@@ -20,7 +18,7 @@ import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class HTTPTaskHistoryRepositoryTest extends AbstractTaskHistoryRepositoryTest<FileBackedTaskHistoryRepository>{
+class HTTPTaskHistoryRepositoryTest extends AbstractTaskHistoryRepositoryTest<HTTPTaskHistoryRepository>{
 
     @Mock
     private KVTaskClient kvTaskClientStub;
@@ -37,11 +35,22 @@ class HTTPTaskHistoryRepositoryTest extends AbstractTaskHistoryRepositoryTest<Fi
         }
 
         MockitoAnnotations.initMocks(this);
+        taskHistoryRepository = new HTTPTaskHistoryRepository(serviceStub, kvTaskClientStub);
     }
 
     @AfterEach
     public void setDown() {
         kvServer.stop();
+    }
+
+    @Test
+    @Override
+    public void shouldCallMethodAddWhenAdd() {
+    }
+
+    @Test
+    @Override
+    public void shouldCallMethodRemoveWhenRemove() {
     }
 
     @Test

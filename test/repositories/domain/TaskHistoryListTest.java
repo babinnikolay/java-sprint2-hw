@@ -44,15 +44,6 @@ public class TaskHistoryListTest {
     }
 
     @Test
-    public void shouldThrowExceptionWhenRemoveByNonExistentId() {
-        assertThrows(
-                NoSuchElementException.class,
-                () -> taskHistoryList.remove(10),
-                "non-existent id"
-        );
-    }
-
-    @Test
     public void shouldNotAddAbstractTaskWhenTaskHistoryHaveDuplicate() {
 
         taskHistoryList = new TaskHistoryList(new HashMap<>());

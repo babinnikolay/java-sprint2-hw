@@ -8,7 +8,7 @@ import java.util.List;
 public abstract class AbstractTaskHistoryRepository {
     protected TaskHistoryRepositoryService service;
 
-    public AbstractTaskHistoryRepository(TaskHistoryRepositoryService service) {
+    protected AbstractTaskHistoryRepository(TaskHistoryRepositoryService service) {
         this.service = service;
     }
 

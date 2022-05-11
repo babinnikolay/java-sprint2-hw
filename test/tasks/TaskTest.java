@@ -59,4 +59,22 @@ public class TaskTest {
         assertEquals(controlEndTime, task.getEndTime());
     }
 
+    @Test
+    public void shouldReturnTaskWhenGetType() {
+        task.setType(TaskType.TASK);
+        assertEquals(TaskType.TASK, task.getType());
+    }
+
+    @Test
+    public void shouldReturnNewDescriptionWhenSetDescription() {
+        task.setDescription("new desc");
+        assertEquals("new desc", task.getDescription());
+    }
+
+    @Test
+    public void shouldReturnNewDurationWhenSetDuration() {
+        task.setDuration(Duration.ofSeconds(10));
+        assertEquals(Duration.ofSeconds(10), task.getDuration());
+    }
+
 }

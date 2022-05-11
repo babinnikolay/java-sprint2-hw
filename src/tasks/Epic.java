@@ -37,8 +37,8 @@ public class Epic extends AbstractTask {
     public void updateTimeFields() {
         if (subTasks.isEmpty()) {
             setDuration(Duration.ZERO);
-            setStartTime(LocalDateTime.MIN);
-            setEndTime(LocalDateTime.MIN);
+            setStartTime(LocalDateTime.now());
+            setEndTime(LocalDateTime.now());
             return;
         }
         Duration totalDuration = Duration.ZERO;
@@ -55,7 +55,7 @@ public class Epic extends AbstractTask {
             if (subTask.getEndTime().isAfter(getEndTime())) {
                 setEndTime(subTask.getEndTime());
             }
-            totalDuration.plus(subTask.getDuration());
+            totalDuration = totalDuration.plus(subTask.getDuration());
         }
         setDuration(totalDuration);
     }

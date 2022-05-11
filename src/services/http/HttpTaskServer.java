@@ -1,37 +1,22 @@
 package services.http;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.sun.net.httpserver.HttpServer;
 import services.TaskManager;
-import services.http.adapters.*;
 import services.http.handlers.*;
-import services.http.serialization.EpicDeserializer;
-import services.http.serialization.SubTaskSerializer;
-import tasks.Epic;
-import tasks.SubTask;
+import services.http.util.GsonHelper;
 import util.Managers;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
-import java.time.Duration;
-import java.time.LocalDateTime;
 
 public class HttpTaskServer {
-    private static final TaskManager taskManagerService = Managers.getDefaultTaskManager();
+    private final TaskManager taskManagerService = Managers.getDefaultTaskManager();
     private static final int PORT = 8080;
     private HttpServer httpServer;
-    private Gson gson;
+    private Gson gson = GsonHelper.getGson();
 
     public HttpTaskServer() {
-
-        gson = new GsonBuilder()
-                .registerTypeAdapter(Duration.class, new DurationAdapter())
-                .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
-                .registerTypeAdapter(TaskStatusAdapter.class, new TaskStatusAdapter())
-                .registerTypeAdapter(SubTask.class, new SubTaskSerializer())
-                .registerTypeAdapter(Epic.class, new EpicDeserializer(taskManagerService))
-                .create();
 
         try {
             httpServer = HttpServer.create();
@@ -60,8 +45,16 @@ public class HttpTaskServer {
         }
     }
 
+    public TaskManager getTaskManagerService() {
+        return taskManagerService;
+    }
+
     public void start() {
-        System.out.printf("server started at %n", PORT);
+        System.out.printf("server started at %d", PORT);
         httpServer.start();
+    }
+
+    public void stop() {
+        httpServer.stop(0);
     }
 }

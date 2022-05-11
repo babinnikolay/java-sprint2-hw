@@ -2,12 +2,15 @@ package repositories;
 
 import com.google.gson.Gson;
 import repositories.services.TaskRepositoryService;
+import services.http.util.GsonHelper;
 import services.kv.KVTaskClient;
 
 
 public class HTTPTaskRepository extends FileBackedTaskRepository{
     private KVTaskClient client;
-    private Gson gson = new Gson();
+
+    private Gson gson = GsonHelper.getGson();
+
     private static final String KV_KEY = "service";
 
     public HTTPTaskRepository(TaskRepositoryService service, KVTaskClient client) {

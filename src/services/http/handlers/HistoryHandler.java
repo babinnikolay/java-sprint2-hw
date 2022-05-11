@@ -17,12 +17,10 @@ public class HistoryHandler extends AbstractHandler{
 
         requestMethod = httpExchange.getRequestMethod();
 
-        switch (requestMethod) {
-            case "GET":
-                response = gson.toJson(taskManager.getHistoryManager().getHistory());
-                break;
-            default:
-                response = "incorrect method";
+        if (requestMethod.equals("GET")) {
+            response = gson.toJson(taskManager.getHistoryManager().getHistory());
+        }else {
+            response = "incorrect method";
         }
 
         httpExchange.sendResponseHeaders(200, 0);

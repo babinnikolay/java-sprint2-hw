@@ -20,23 +20,20 @@ public class TasksRootHandler extends AbstractHandler {
 
         requestMethod = httpExchange.getRequestMethod();
 
-        switch (requestMethod) {
-            case "GET":
-                List<AbstractTask> abstractTaskList = new ArrayList<>();
-                abstractTaskList.addAll(taskManager.getAllTasks());
-                abstractTaskList.addAll(taskManager.getAllEpics());
-                abstractTaskList.addAll(taskManager.getAllSubTasks());
-                response = gson.toJson(abstractTaskList);
-                break;
-            default:
-                response = "incorrect method 1";
+        if (requestMethod.equals("GET")) {
+
+            List<AbstractTask> abstractTaskList = new ArrayList<>();
+            abstractTaskList.addAll(taskManager.getAllTasks());
+            abstractTaskList.addAll(taskManager.getAllEpics());
+            abstractTaskList.addAll(taskManager.getAllSubTasks());
+            response = gson.toJson(abstractTaskList);
+        } else {
+            response = "incorrect method";
         }
 
         httpExchange.sendResponseHeaders(200, 0);
         try (OutputStream os = httpExchange.getResponseBody()) {
             os.write(response.getBytes());
         }
-
-
     }
 }

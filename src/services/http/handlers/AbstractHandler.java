@@ -17,7 +17,7 @@ public abstract class AbstractHandler implements HttpHandler {
     protected InputStream inputStream;
     protected String requestMethod;
 
-    public AbstractHandler(TaskManager taskManager, Gson gson) {
+    protected AbstractHandler(TaskManager taskManager, Gson gson) {
         this.taskManager = taskManager;
         this.gson = gson;
     }

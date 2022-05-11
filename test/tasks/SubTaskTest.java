@@ -23,6 +23,7 @@ public class SubTaskTest {
 
     @Test
     public void shouldReturnEpicWhenGetParent() {
+        subTask.setParent(epicStub);
         assertEquals(epicStub, subTask.getParent());
         assertNotNull(subTask.getParent());
     }

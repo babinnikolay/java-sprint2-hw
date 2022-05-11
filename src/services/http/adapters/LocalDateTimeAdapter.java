@@ -12,7 +12,7 @@ import java.time.temporal.ChronoField;
 
 public class LocalDateTimeAdapter extends TypeAdapter<LocalDateTime> {
 
-    public static DateTimeFormatter formatter =
+    public static final DateTimeFormatter formatter =
             new DateTimeFormatterBuilder().appendPattern("dd.MM.yyyy[ [HH][:mm][:ss][.SSS]]")
                     .parseDefaulting(ChronoField.HOUR_OF_DAY, 0)
                     .parseDefaulting(ChronoField.MINUTE_OF_HOUR, 0)

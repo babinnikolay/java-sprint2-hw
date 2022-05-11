@@ -3,10 +3,9 @@ package repositories.domain;
 import tasks.AbstractTask;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
-import java.util.NoSuchElementException;
 
 
 public class TaskHistoryList implements Serializable {

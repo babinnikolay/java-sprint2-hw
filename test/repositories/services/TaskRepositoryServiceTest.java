@@ -282,6 +282,7 @@ public class TaskRepositoryServiceTest {
         assertEquals("original", taskRepositoryService.getSubTaskById(1).getName());
 
         when(subTask1Stub.getName()).thenReturn("updated");
+        when(subTask1Stub.getParent()).thenReturn(epicStub1);
         taskRepositoryService.updateSubTask(subTask1Stub);
         assertEquals("updated", taskRepositoryService.getSubTaskById(1).getName());
     }

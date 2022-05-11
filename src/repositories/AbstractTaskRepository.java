@@ -10,7 +10,7 @@ public abstract class AbstractTaskRepository {
 
     protected TaskRepositoryService service;
 
-    public AbstractTaskRepository(TaskRepositoryService service) {
+    protected AbstractTaskRepository(TaskRepositoryService service) {
         this.service = service;
     }
 

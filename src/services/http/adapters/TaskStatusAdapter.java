@@ -6,11 +6,8 @@ import com.google.gson.stream.JsonWriter;
 import tasks.TaskStatus;
 
 import java.io.IOException;
-import java.time.format.DateTimeFormatter;
 
 public class TaskStatusAdapter extends TypeAdapter<TaskStatus> {
-
-    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 
     @Override
     public void write(JsonWriter jsonWriter, TaskStatus status) throws IOException {

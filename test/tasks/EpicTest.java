@@ -166,8 +166,8 @@ public class EpicTest {
     public void shouldReturnNullWhenEpicDoesNotHaveSubtasksGetStartEndTime() {
         epic.updateTimeFields();
 
-        assertNull(epic.getStartTime());
-        assertNull(epic.getEndTime());
+        assertNotNull(epic.getStartTime());
+        assertNotNull(epic.getEndTime());
         assertEquals(Duration.ZERO, epic.getDuration());
     }
 

@@ -1,9 +1,6 @@
 package services.http.handlers;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.sun.net.httpserver.HttpExchange;
 import services.TaskManager;
 import services.http.util.QueryHelper;
@@ -19,7 +16,6 @@ public class SubTaskHandler extends AbstractHandler{
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
-
         requestMethod = httpExchange.getRequestMethod();
         String query = httpExchange.getRequestURI().getQuery();
         int id;
