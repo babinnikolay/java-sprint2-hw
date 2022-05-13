@@ -1,6 +1,7 @@
 package services.http;
 
 import com.google.gson.Gson;
+import exceptions.ManagerSaveException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -47,7 +48,7 @@ public class HttpTaskServerTest {
         try {
             kvServer = new KVServer();
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new ManagerSaveException();
         }
         kvServer.start();
 
@@ -83,7 +84,7 @@ public class HttpTaskServerTest {
         try {
             response = httpClient.send(request, stringBodyHandler);
         } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
+            throw new ManagerSaveException();
         }
 
         assertEquals(200, response.statusCode());
@@ -113,7 +114,7 @@ public class HttpTaskServerTest {
         try {
             response = httpClient.send(request, stringBodyHandler);
         } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
+            throw new ManagerSaveException();
         }
 
         assertEquals(200, response.statusCode());
@@ -148,7 +149,7 @@ public class HttpTaskServerTest {
         try {
             response = httpClient.send(request, stringBodyHandler);
         } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
+            throw new ManagerSaveException();
         }
 
         assertEquals(200, response.statusCode());
@@ -175,7 +176,7 @@ public class HttpTaskServerTest {
         try {
             response = httpClient.send(request, stringBodyHandler);
         } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
+            throw new ManagerSaveException();
         }
 
         assertEquals(200, response.statusCode());
@@ -206,7 +207,7 @@ public class HttpTaskServerTest {
         try {
             response = httpClient.send(request, stringBodyHandler);
         } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
+            throw new ManagerSaveException();
         }
 
         assertEquals(200, response.statusCode());
@@ -242,7 +243,7 @@ public class HttpTaskServerTest {
         try {
             response = httpClient.send(request, stringBodyHandler);
         } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
+            throw new ManagerSaveException();
         }
 
         assertEquals(200, response.statusCode());
@@ -276,7 +277,7 @@ public class HttpTaskServerTest {
         try {
             response = httpClient.send(request, stringBodyHandler);
         } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
+            throw new ManagerSaveException();
         }
 
         assertEquals(200, response.statusCode());
@@ -311,7 +312,7 @@ public class HttpTaskServerTest {
         try {
             response = httpClient.send(request, stringBodyHandler);
         } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
+            throw new ManagerSaveException();
         }
 
         assertEquals(200, response.statusCode());
@@ -353,7 +354,7 @@ public class HttpTaskServerTest {
         try {
             response = httpClient.send(request, stringBodyHandler);
         } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
+            throw new ManagerSaveException();
         }
 
         assertEquals(200, response.statusCode());
@@ -380,7 +381,7 @@ public class HttpTaskServerTest {
         try {
             response = httpClient.send(request, stringBodyHandler);
         } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
+            throw new ManagerSaveException();
         }
 
         request = HttpRequest.newBuilder()
@@ -391,7 +392,7 @@ public class HttpTaskServerTest {
         try {
             response = httpClient.send(request, stringBodyHandler);
         } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
+            throw new ManagerSaveException();
         }
 
         assertEquals(200, response.statusCode());
@@ -421,7 +422,7 @@ public class HttpTaskServerTest {
         try {
             response = httpClient.send(request, stringBodyHandler);
         } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
+            throw new ManagerSaveException();
         }
 
         request = HttpRequest.newBuilder()
@@ -432,7 +433,7 @@ public class HttpTaskServerTest {
         try {
             response = httpClient.send(request, stringBodyHandler);
         } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
+            throw new ManagerSaveException();
         }
 
         assertEquals(200, response.statusCode());
@@ -467,7 +468,7 @@ public class HttpTaskServerTest {
         try {
             response = httpClient.send(request, stringBodyHandler);
         } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
+            throw new ManagerSaveException();
         }
 
         request = HttpRequest.newBuilder()
@@ -478,7 +479,7 @@ public class HttpTaskServerTest {
         try {
             response = httpClient.send(request, stringBodyHandler);
         } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
+            throw new ManagerSaveException();
         }
 
         assertEquals(200, response.statusCode());
@@ -514,7 +515,7 @@ public class HttpTaskServerTest {
         try {
             response = httpClient.send(request, stringBodyHandler);
         } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
+            throw new ManagerSaveException();
         }
 
         uri = URI.create("http://localhost:8080/tasks/task");
@@ -526,7 +527,7 @@ public class HttpTaskServerTest {
         try {
             response = httpClient.send(request, stringBodyHandler);
         } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
+            throw new ManagerSaveException();
         }
 
         assertEquals(200, response.statusCode());
@@ -568,7 +569,7 @@ public class HttpTaskServerTest {
         try {
             response = httpClient.send(request, stringBodyHandler);
         } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
+            throw new ManagerSaveException();
         }
 
         uri = URI.create("http://localhost:8080/tasks/epic");
@@ -581,7 +582,7 @@ public class HttpTaskServerTest {
         try {
             response = httpClient.send(request, stringBodyHandler);
         } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
+            throw new ManagerSaveException();
         }
 
         assertEquals(200, response.statusCode());
@@ -626,7 +627,7 @@ public class HttpTaskServerTest {
         try {
             response = httpClient.send(request, stringBodyHandler);
         } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
+            throw new ManagerSaveException();
         }
 
         uri = URI.create("http://localhost:8080/tasks/subtask");
@@ -638,7 +639,7 @@ public class HttpTaskServerTest {
         try {
             response = httpClient.send(request, stringBodyHandler);
         } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
+            throw new ManagerSaveException();
         }
 
         assertEquals(200, response.statusCode());
@@ -656,7 +657,7 @@ public class HttpTaskServerTest {
         try {
             response = httpClient.send(request, stringBodyHandler);
         } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
+            throw new ManagerSaveException();
         }
         assertEquals("incorrect method", response.body());
     }
@@ -671,7 +672,7 @@ public class HttpTaskServerTest {
         try {
             response = httpClient.send(request, stringBodyHandler);
         } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
+            throw new ManagerSaveException();
         }
     }
 

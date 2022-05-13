@@ -25,8 +25,6 @@ public class GsonHelper {
             .registerTypeAdapter(TaskHistoryList.class, new TaskHistoryListSerializer())
             .create();
 
-    private GsonHelper() {}
-
     public static Gson getGson() {
         return gson;
     }

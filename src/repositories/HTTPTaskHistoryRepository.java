@@ -6,7 +6,7 @@ import services.http.util.GsonHelper;
 import services.kv.KVTaskClient;
 
 public class HTTPTaskHistoryRepository extends FileBackedTaskHistoryRepository{
-    private KVTaskClient client;
+    private final KVTaskClient client;
     private Gson gson;
     private static final String KV_KEY = "history";
 

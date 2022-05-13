@@ -7,10 +7,8 @@ import services.kv.KVTaskClient;
 
 
 public class HTTPTaskRepository extends FileBackedTaskRepository{
-    private KVTaskClient client;
-
+    final private KVTaskClient client;
     private Gson gson = GsonHelper.getGson();
-
     private static final String KV_KEY = "service";
 
     public HTTPTaskRepository(TaskRepositoryService service, KVTaskClient client) {

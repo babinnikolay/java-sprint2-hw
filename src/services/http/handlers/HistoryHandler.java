@@ -17,6 +17,7 @@ public class HistoryHandler extends AbstractHandler{
 
         requestMethod = httpExchange.getRequestMethod();
 
+        String response;
         if (requestMethod.equals("GET")) {
             response = gson.toJson(taskManager.getHistoryManager().getHistory());
         }else {

@@ -14,7 +14,7 @@ public class HttpTaskServer {
     private final TaskManager taskManagerService = Managers.getDefaultTaskManager();
     private static final int PORT = 8080;
     private HttpServer httpServer;
-    private Gson gson = GsonHelper.getGson();
+    private final Gson gson = GsonHelper.getGson();
 
     public HttpTaskServer() {
 

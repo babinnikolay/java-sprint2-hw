@@ -1,5 +1,7 @@
 package services.kv;
 
+import exceptions.ManagerSaveException;
+
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -7,11 +9,10 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
 public class KVTaskClient {
-    private long API_KEY;
-    private String serverURL;
+    private long apiKey;
+    private final String serverURL;
     private HttpClient client;
     private HttpResponse.BodyHandler<String> defaultHandler = HttpResponse.BodyHandlers.ofString();
-    private HttpResponse<String> response;
 
     public KVTaskClient(String serverURL) {
         this.serverURL = serverURL;
@@ -27,23 +28,23 @@ public class KVTaskClient {
 
         client = HttpClient.newHttpClient();
 
+        HttpResponse<String> response;
         try {
             response = client.send(request, defaultHandler);
         } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
-            return;
+            throw new ManagerSaveException();
         }
 
         if (response.statusCode() != 200) {
             return;
         }
 
-        API_KEY = Long.parseLong(response.body());
+        apiKey = Long.parseLong(response.body());
     }
 
     public void put(String key, String json) {
 //        POST /save/<ключ>?API_KEY=
-        URI uri = URI.create(String.format("%s/save/%s?API_KEY=%d", serverURL, key, API_KEY));
+        URI uri = URI.create(String.format("%s/save/%s?API_KEY=%d", serverURL, key, apiKey));
 
         HttpRequest request = HttpRequest.newBuilder()
                 .POST(HttpRequest.BodyPublishers.ofString(json))
@@ -51,31 +52,31 @@ public class KVTaskClient {
                 .build();
 
         try {
-            response = client.send(request, defaultHandler);
+            HttpResponse<String> response = client.send(request, defaultHandler);
         } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
+            throw new ManagerSaveException();
         }
     }
 
     public String load(String key) {
 //        GET /load/<ключ>?API_KEY=
-        URI uri = URI.create(String.format("%s/load/%s?API_KEY=%d", serverURL, key, API_KEY));
+        URI uri = URI.create(String.format("%s/load/%s?API_KEY=%d", serverURL, key, apiKey));
 
         HttpRequest request = HttpRequest.newBuilder()
                 .GET()
                 .uri(uri)
                 .build();
 
+        HttpResponse<String> response;
         try {
             response = client.send(request, defaultHandler);
         } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
+            throw new ManagerSaveException();
         }
 
-        if (response.statusCode() != 200) {
+        if (response == null || response.statusCode() != 200) {
             return null;
         }
-
         return response.body();
     }
 }

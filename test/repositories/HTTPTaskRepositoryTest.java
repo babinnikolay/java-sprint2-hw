@@ -1,5 +1,6 @@
 package repositories;
 
+import exceptions.ManagerSaveException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -32,7 +33,7 @@ class HTTPTaskRepositoryTest extends AbstractTaskRepositoryTest<FileBackedTaskRe
             kvServer = new KVServer();
             kvServer.start();
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new ManagerSaveException();
         }
 
         MockitoAnnotations.initMocks(this);

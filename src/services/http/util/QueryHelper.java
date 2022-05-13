@@ -13,8 +13,4 @@ public class QueryHelper {
         }
         return id;
     }
-
-    private QueryHelper() {
-
-    }
 }

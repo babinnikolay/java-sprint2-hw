@@ -22,6 +22,7 @@ public class EpicHandler extends AbstractHandler {
         String query = httpExchange.getRequestURI().getQuery();
         int id;
 
+        String response;
         switch (requestMethod) {
             case "GET":
                 if (query == null) {
@@ -34,7 +35,7 @@ public class EpicHandler extends AbstractHandler {
             case "POST":
                 id = QueryHelper.getIdFromQuery(query);
                 inputStream = httpExchange.getRequestBody();
-                body = new String(inputStream.readAllBytes(), DEFAULT_CHARSET);
+                String body = new String(inputStream.readAllBytes(), DEFAULT_CHARSET);
                 Epic newEpic = gson.fromJson(body, Epic.class);
                 newEpic.setId(id);
                 if (newEpic.getId() == 0) {

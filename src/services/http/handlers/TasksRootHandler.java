@@ -20,6 +20,7 @@ public class TasksRootHandler extends AbstractHandler {
 
         requestMethod = httpExchange.getRequestMethod();
 
+        String response;
         if (requestMethod.equals("GET")) {
 
             List<AbstractTask> abstractTaskList = new ArrayList<>();

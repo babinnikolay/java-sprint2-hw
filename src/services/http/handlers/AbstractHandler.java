@@ -10,10 +10,8 @@ import java.nio.charset.StandardCharsets;
 
 public abstract class AbstractHandler implements HttpHandler {
     protected static final Charset DEFAULT_CHARSET = StandardCharsets.UTF_8;
-    protected TaskManager taskManager;
+    protected final TaskManager taskManager;
     protected Gson gson;
-    protected String response = "";
-    protected String body = "";
     protected InputStream inputStream;
     protected String requestMethod;
 

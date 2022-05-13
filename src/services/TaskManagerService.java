@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Set;
 
 public class TaskManagerService implements TaskManager {
+    //>>А для чего использовать абстрактный класс вместо интерфейса?
+    //чтобы не дублировать в каждом классе репозитория методы сервиса репозитория
     private final AbstractTaskRepository repository;
     private final HistoryManager history;
 

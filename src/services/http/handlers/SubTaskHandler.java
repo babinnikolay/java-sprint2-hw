@@ -20,6 +20,7 @@ public class SubTaskHandler extends AbstractHandler{
         String query = httpExchange.getRequestURI().getQuery();
         int id;
 
+        String response;
         switch (requestMethod) {
             case "GET":
                 if (query == null) {
@@ -32,7 +33,7 @@ public class SubTaskHandler extends AbstractHandler{
             case "POST":
                 id = QueryHelper.getIdFromQuery(query);
                 inputStream = httpExchange.getRequestBody();
-                body = new String(inputStream.readAllBytes(), DEFAULT_CHARSET);
+                String body = new String(inputStream.readAllBytes(), DEFAULT_CHARSET);
                 SubTask newSubTask = gson.fromJson(body, SubTask.class);
                 newSubTask.setParent(taskManager.getEpicById(newSubTask.getParent().getId()));
                 newSubTask.setId(id);

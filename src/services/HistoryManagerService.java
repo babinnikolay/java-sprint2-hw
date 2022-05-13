@@ -7,6 +7,8 @@ import java.util.List;
 
 public class HistoryManagerService implements HistoryManager {
 
+    //>>Для чего абстрактный класс вместо интерфейса?
+    //за компанию с AbstractTaskRepository
     private final AbstractTaskHistoryRepository historyRepository;
 
     public HistoryManagerService(AbstractTaskHistoryRepository historyRepository) {
